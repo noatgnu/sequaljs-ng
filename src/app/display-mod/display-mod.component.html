@@ -25,7 +25,11 @@
           @if (!pipeValue.value.startsWith("#")) {
             <div class="pipe-value" [ngClass]="'pipe-type-' + pipeValue.type.toLowerCase()">
               <div class="pipe-indicator"></div>
-              @if(pipeValue.source){<span>{{pipeValue.source}}:</span>}<span>{{pipeValue.value}}</span>
+              @if(pipeValue.source){
+                {{pipeValue.source}}:{{pipeValue.value}}
+              }@else{
+                {{pipeValue.value}}
+              }
             </div>
           }
         }

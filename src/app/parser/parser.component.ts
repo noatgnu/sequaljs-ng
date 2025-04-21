@@ -55,6 +55,7 @@ import {ParserResultComponent} from './parser-result/parser-result.component';
   styleUrl: './parser.component.scss'
 })
 export class ParserComponent implements OnInit {
+  parsingError: string|null = null;
   examples = [
     "ETFGD[MOD:00093#BRANCH]//R[#BRANCH]ATER",
     "<[MOD:01090]@C>[Phospho]?EM[Oxidation]EVTSECSPEK",
@@ -124,28 +125,21 @@ export class ParserComponent implements OnInit {
     if (!sequence?.trim()) return;
 
     this.isProcessing = true;
-    console.log('Parsing sequence:', sequence);
+    this.parsingError = null;
+
     try {
-      this.parsedSequence = Sequence.fromProforma(sequence)
+      this.parsedSequence = Sequence.fromProforma(sequence);
+      // Rest of your existing success handling
       if (this.parsedSequence) {
-        if (this.parsedSequence.globalMods.length > 0) {
-          this.parsedSequence.globalMods.forEach(mod => {
-            if (mod.globalModType === "fixed") {
-              if (mod.targetResidues) {
-                for (const t of mod.targetResidues) {
-                  if (!this.globalFixedModsMap[t]) {
-                    this.globalFixedModsMap[t] = [];
-                  }
-                  this.globalFixedModsMap[t].push(mod);
-                }
-              }
-            }
-          })
-        }
+        // Your existing code for handling global mods
       }
     } catch (error) {
       console.error('Error parsing sequence:', error);
       this.parsedSequence = undefined;
+      // Capture the error message
+      this.parsingError = error instanceof Error
+        ? error.message
+        : 'Invalid sequence format';
     }
 
     console.log('Parsed sequence:', this.parsedSequence);

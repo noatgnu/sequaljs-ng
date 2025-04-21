@@ -126,6 +126,9 @@ body.dark-mode {
   min-width: 60px;
   margin: 0 2px;
   position: relative;
+  width: auto;
+  max-width: 200px;
+  padding: 0 5px;
 }
 
 .amino-acid {
@@ -162,12 +165,22 @@ body.dark-mode {
   font-size: 11px;
   text-align: center;
   position: relative;
-  max-width: 150px;
+  max-width: 200px;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: normal;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.mod-badge, .global-fixed-badge {
+  width: auto;
+  max-width: 200px;
+  box-sizing: border-box;
+  padding: 4px;
+  margin-bottom: 4px;
+  word-break: break-all;
 }
 
 .mod-name {
@@ -178,29 +191,32 @@ body.dark-mode {
 }
 
 .pipe-values {
+  width: 100%;
   font-size: 10px;
-}
-
-.pipe-value {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
 }
 
 .pipe-value {
   display: flex;
-  align-items: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  align-items: flex-start; /* Change from center to allow text to wrap */
+  white-space: normal; /* Change from nowrap to normal */
+  overflow-wrap: break-word;
+  word-break: break-all;
+  overflow: visible; /* Change from hidden */
   margin: 2px 0;
+  width: 100%;
+  font-size: 10px;
 }
 
 .pipe-indicator {
   width: 3px;
   height: 14px;
+  min-width: 3px; /* Add min-width to prevent shrinking */
   margin-right: 4px;
   border-radius: 1px;
+  align-self: flex-start; /* Align to top when content wraps */
+  margin-top: 3px; /* Small offset to align with text */
 }
 
 .pipe-type-synonym .pipe-indicator { background-color: #2196F3; }
@@ -353,6 +369,7 @@ body.dark-mode {
   flex-direction: column;
   margin-top: 4px;
   padding-top: 4px;
+
   border-top: 1px dashed rgba(0, 0, 0, 0.12);
 }
 
@@ -363,6 +380,7 @@ body.dark-mode {
   background-color: rgba(255, 152, 0, 0.05);
   border-left: 2px solid rgba(255, 152, 0, 0.5);
   border-radius: 2px;
+  max-width: 100px;
 }
 
 .global-fixed-badge::before {
