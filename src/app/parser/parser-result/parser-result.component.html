@@ -1,0 +1,133 @@
+<div class="results-container">
+  @if (sequence) {
+    <div class="sequence-container">
+      <div class="sequence-scroller">
+        @if (sequence.globalMods.length > 0) {
+          <div class="terminal-section global-section" matTooltip="Modifications applied to all residues to specific amino acids">
+            <div class="terminal-box global-box">
+              <div class="terminal-header">Global Modifications</div>
+              <div class="terminal-content">
+                @for (mod of sequence.globalMods; track $index) {
+                  <div class="terminal-mod">
+                    @if (mod.globalModType === "fixed" && mod.targetResidues) {
+                      <div class="fixed-mod">
+                        <span>Fixed:</span> @for (t of mod.targetResidues; track t) {<span>{{t}}</span>}
+                      </div>
+                    } @else {
+                      <div class="fixed-mod">
+                        <span>Isotope</span>
+                      </div>
+                    }
+                    <app-display-mod [modification]="mod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="section-separator"></div>
+          </div>
+        }
+        @if (sequence.mods.has(-3)) {
+          <div class="terminal-section labile-section" matTooltip="Modifications that are easily lost during analysis">
+            <div class="terminal-box labile-box">
+              <div class="terminal-header">Labile Modifications</div>
+              <div class="terminal-content">
+                @for (mod of sequence.mods.get(-3); track $index) {
+                  <div class="terminal-mod">
+                    <app-display-mod [modification]="mod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="section-separator"></div>
+          </div>
+        }
+        @if (sequence.mods.has(-4)) {
+          <div class="terminal-section unknown-position-section" matTooltip="Modifications with unknown position in the sequence">
+            <div class="terminal-box unknown-position-box">
+              <div class="terminal-header">Unknown Position</div>
+              <div class="terminal-content">
+                @for (mod of sequence.mods.get(-4); track $index) {
+                  <div class="terminal-mod">
+                    <app-display-mod [modification]="mod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="section-separator"></div>
+          </div>
+        }
+        @if (sequence.mods.has(-1)) {
+          <div class="terminal-section n-terminal-section">
+            <div class="terminal-box">
+              <div class="terminal-header">N-Terminal</div>
+              <div class="terminal-content">
+                @for (mod of sequence.mods.get(-1); track $index) {
+                  <div class="terminal-mod">
+                    <app-display-mod [modification]="mod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="section-separator"></div>
+          </div>
+        }
+        @if (sequence.sequenceAmbiguities.length > 0) {
+          <div class="ambiguities-section">
+            @for (ambiguity of sequence.sequenceAmbiguities; track $index) {
+              <div class="ambiguity-box">
+                <div class="ambiguity-header">Ambiguity {{$index + 1}}</div>
+                <div class="ambiguity-content">{{ambiguity.value}}</div>
+              </div>
+            }
+            <div class="section-separator"></div>
+          </div>
+        }
+        @for (aa of sequence.seq; track $index) {
+          <div class="amino-acid-box">
+            <div class="amino-acid" [class.sequence-ambiguous-residue]="sequenceAmbiguousResidues.includes(aa.value)"
+                 [matTooltip]="sequenceAmbiguousResidues.includes(aa.value) ? 'This residue appears as a sequence ambiguity' : ''">{{aa.value}}</div>
+            <div class="position-marker">{{$index + 1}}</div>
+            @if (aa.mods.length > 0) {
+
+              <div class="modifications">
+                @for (aaMod of aa.mods; track $index) {
+                  <div class="mod-badge" [class.range-mod]="aaMod.inRange"
+                       [matTooltip]="aaMod.inRange ? 'Potential modification within a range' : ''">
+                    @if (aaMod.inRange) {
+                      <div class="range-indicator">?</div>
+                    }
+                    <app-display-mod [modification]="aaMod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            }
+            @if (globalFixedModsMap && globalFixedModsMap[aa.value]) {
+              <div class="global-fixed-mods">
+                @for (fixedMod of globalFixedModsMap[aa.value]; track $index) {
+                  <div class="global-fixed-badge">
+                    <app-display-mod [modification]="fixedMod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        }
+        @if (sequence.mods.has(-2)) {
+          <div class="terminal-section c-terminal-section">
+            <div class="section-separator"></div>
+            <div class="terminal-box">
+              <div class="terminal-header">C-Terminal</div>
+              <div class="terminal-content">
+                @for (mod of sequence.mods.get(-2); track $index) {
+                  <div class="terminal-mod">
+                    <app-display-mod [modification]="mod"></app-display-mod>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

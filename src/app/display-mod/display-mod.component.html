@@ -1,0 +1,37 @@
+@if (modification) {
+  <div class="pipe-values">
+    @if (modification.crosslinkId) {
+      <div class="crosslink-id">
+        <span>Crosslink ID:</span>
+        <span>{{modification.crosslinkId}}</span>
+      </div>
+    }
+    @if (modification.isBranch || modification.isBranchRef) {
+      <div class="branch">
+        <span>Branch</span>
+      </div>
+    }
+    @if (modification.ambiguityGroup) {
+      <div class="ambiguity-group" matTooltip="Localization Score {{modification.localizationScore}}">
+        <p>
+          Ambiguity Group:<br>
+          {{modification.ambiguityGroup}} ({{modification.localizationScore}})
+        </p>
+      </div>
+    }
+    @for (pipeValue of modification.modValue.pipeValues; track $index) {
+      @if (pipeValue.value.toUpperCase() !== "#BRANCH") {
+        @if (pipeValue.value.replace("#", "") !== modification.crosslinkId) {
+          @if (!pipeValue.value.startsWith("#")) {
+            <div class="pipe-value" [ngClass]="'pipe-type-' + pipeValue.type.toLowerCase()">
+              <div class="pipe-indicator"></div>
+              @if(pipeValue.source){<span>{{pipeValue.source}}:</span>}<span>{{pipeValue.value}}</span>
+            </div>
+          }
+        }
+      }
+
+    }
+  </div>
+}
+

@@ -1,0 +1,22 @@
+.app-header {
+  padding: 0;
+}
+
+.header-toolbar {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
