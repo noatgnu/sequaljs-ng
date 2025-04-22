@@ -131,6 +131,7 @@ export class ParserComponent implements OnInit {
     try {
       this.parsedSequence = Sequence.fromProforma(sequence);
       if (this.parsedSequence) {
+        console.log(this.parsedSequence);
       }
     } catch (error) {
       console.error('Error parsing sequence:', error);
