@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {WebService} from '../services/web.service';
 
 @Component({
   selector: 'app-show-glycan',
@@ -8,8 +10,13 @@ import {Component, Input} from '@angular/core';
 })
 export class ShowGlycanComponent {
   baseUrl = 'https://api.glygen.org/glycan/image/'
-  @Input() glycanId: string | undefined = undefined
+  private _glycanId: string | undefined = undefined
+  @Input() set glycanId(value: string | undefined) {
+    this._glycanId = value;
+  }
+  get glycanId(): string | undefined {
+    return this._glycanId;
+  }
   constructor() { }
-
 
 }
