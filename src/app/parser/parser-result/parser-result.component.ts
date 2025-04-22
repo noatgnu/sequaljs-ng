@@ -15,12 +15,7 @@ import {Sequence} from 'sequaljs/dist/sequence';
   selector: 'app-parser-result',
   imports: [
     DisplayModComponent,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelHeader,
-    MatExpansionPanelTitle,
     MatTooltip,
-    NgClass,
   ],
   templateUrl: './parser-result.component.html',
   styleUrl: './parser-result.component.scss'
