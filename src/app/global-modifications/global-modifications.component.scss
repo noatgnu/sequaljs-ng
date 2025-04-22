@@ -1,0 +1,57 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .section-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+.code-card {
+  margin-top: 16px;
+}
+
+.output-card {
+  max-height: 400px;
+  overflow: auto;
+}
+
+pre {
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+}
+
+code {
+  font-family: 'Roboto Mono', monospace;
+}
+
+.tab-content {
+  padding: 16px;
+}
+
+mat-list-item {
+  height: auto !important;
+  padding: 8px 0;
+}

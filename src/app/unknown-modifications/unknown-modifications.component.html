@@ -1,0 +1,117 @@
+<div class="container">
+  <h1 class="mat-headline-5">Unknown Position Modifications in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>What are Unknown Position Modifications?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        In proteomics research, it's common to know that a modification exists on a peptide,
+        but its exact location is completely unknown. ProForma notation supports this scenario
+        using the '?' symbol to indicate a modification that could be anywhere on the peptide.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Notation Syntax</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Unknown position modifications use the following syntax in ProForma:</p>
+
+      <mat-list>
+        <mat-list-item>
+          <code>[Mod]?SEQUENCE</code>: The modification could be anywhere in the sequence
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>[Mod1][Mod2]?SEQUENCE</code>: Multiple modifications with unknown positions
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Examples</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group>
+        <mat-button-toggle (click)="setExample('basic')">Basic Example</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('multiple')">Multiple Unknown Mods</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('combined')">Combined with Known Mods</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <h3 class="mat-subtitle-1 mt-4">ProForma Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentExample}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsed Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{parsedOutput}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>API Methods</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS stores unknown position modifications in the <code>mods</code> Map with a specific key:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Accessing Unknown Mods">
+          <mat-card class="code-card">
+            <pre><code>{{exampleCodes['accessUnknownMods']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Working with Multiple Mods">
+          <mat-card class="code-card">
+            <pre><code>{{exampleCodes['multiple']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Converting to ProForma">
+          <mat-card class="code-card">
+            <pre><code>{{exampleCodes['writing']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Differences from Other "Ambiguous"/"Uncertainty" Modification Types</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        It's important to understand the differences between the various ways to express uncertainty in
+        modification positions:
+      </p>
+
+      <mat-list>
+        <mat-list-item>
+          <strong>Unknown Position Mods:</strong> <code>[Mod]?PEPTIDE</code> - Completely unknown position, could be anywhere
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Ambiguous Position Mods:</strong> <code>PEPT(STY)[Phospho]IDE</code> - Limited to specific residues in parentheses
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Labile Mods:</strong> <code>PEPTS{{ '{' }}Phospho{{ '}' }}IDE</code> - At a specific position that can be lost during MS experiment.
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Ambiguity Groups:</strong> <code>PEPTS[Phospho#g1]IDES[#g1]</code> - Ambiguous assignment with preferred position.
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,120 @@
+<div class="container">
+  <h1 class="mat-headline-5">Global Modifications in SequalJS</h1>
+
+  <p class="mat-body-1">
+    Global modifications allow you to specify modifications that apply to all occurrences of specific amino acids throughout a peptide sequence.
+    This is especially useful for commonly applied modifications like carbamidomethylation of cysteine residues or isotope labeling.
+  </p>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Examples</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group>
+        <mat-button-toggle (click)="setExample('globalMod')">Basic Global Mod</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('multipleMods')">Multiple Global Mods</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('isotopeLabel')">Isotope Labeling</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>ProForma Notation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card class="code-card">
+        <pre><code>{{currentExample}}</code></pre>
+      </mat-card>
+      <p class="mat-body-2 mt-3">Global modifications use the syntax
+        <code>&lt;[ModName]&#64;AminoAcid&gt;</code>
+        at the beginning of a sequence.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="section-grid">
+    <mat-card appearance="outlined" class="mb-4">
+      <mat-card-header>
+        <mat-card-title>Usage in Code</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card class="code-card">
+          <pre><code>// Parse sequence with global modification
+const seq = Sequence.fromProforma('<[Carbamidomethyl]&#64;C>PEPTCDE');
+
+// Access global modifications
+console.log(seq.globalMods.length); // 1
+console.log(seq.globalMods[0].modValue.primaryValue); // "Carbamidomethyl"
+console.log(seq.globalMods[0].targetResidues); // ["C"]
+
+// All Cysteine residues should be modified in the
+//sequence however you won't see the modification
+//in the actual amino acid when accessing its mods
+const cysteine = seq.seq[4]; // 'C' at position 4
+console.log(cysteine.value); // "C"
+console.log(cysteine.mods.length); // "0"</code></pre>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="mb-4">
+      <mat-card-header>
+        <mat-card-title>Parsed Results</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card class="output-card">
+          <pre>{{output}}</pre>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Types of Global Modifications</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Fixed Mods">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Fixed Modifications</h3>
+            <p>
+              Fixed modifications are applied to all instances of a specific amino acid. The most common example is
+              carbamidomethylation of cysteine residues in proteomics experiments.
+            </p>
+            <mat-card class="code-card">
+              <pre>
+                <code>// Example of fixed carbamidomethylation on cysteine
+const seq = Sequence.fromProforma('&lt;[Carbamidomethyl]&#64;C&gt;PEPTCDE');
+
+// You can also specify multiple amino acid targets
+const seq2 = Sequence.fromProforma('&lt;[Oxidation]&#64;M,W&gt;PEPTMWKE');
+                </code>
+              </pre>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Isotope Labels">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Isotope Labeling</h3>
+            <p>
+              SequalJS supports isotope labeling using the Formula source to indicate isotopic compositions.
+              This is commonly used in SILAC experiments and other isotope-tagging approaches.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// Example of isotope labeling
+const seq = Sequence.fromProforma('&lt;13C6&gt;PEPTIDERK');
+
+// Access the formula information
+const isotopeMod = seq.globalMods[0];
+console.log(isotopeMod.modValue.primaryValue); // "13C6"
+console.log(isotopeMod.source); // "Formula"</code></pre>
+            </mat-card>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
