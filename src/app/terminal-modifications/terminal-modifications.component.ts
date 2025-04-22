@@ -105,7 +105,6 @@ if (nTermMods && nTermMods.length > 0) {
 
   for (const mod of nTermMods) {
     console.log(\`- Modification: \${mod.modValue.primaryValue}\`);
-    console.log(\`- Mass: \${mod.mass}\`);
   }
 }
 
@@ -150,7 +149,6 @@ console.log(proforma); // "[Acetyl]-PEPTIDE-[Amidated]"`,
       const nTermMods = seq.mods.get(-1) || [];
       const nTermModsInfo = nTermMods.map(mod => ({
         name: mod.modValue.primaryValue,
-        mass: mod.mass,
         source: mod.source || 'Unknown'
       }));
 
@@ -158,7 +156,6 @@ console.log(proforma); // "[Acetyl]-PEPTIDE-[Amidated]"`,
       const cTermMods = seq.mods.get(-2) || [];
       const cTermModsInfo = cTermMods.map(mod => ({
         name: mod.modValue.primaryValue,
-        mass: mod.mass,
         source: mod.source || 'Unknown'
       }));
 
@@ -171,7 +168,6 @@ console.log(proforma); // "[Acetyl]-PEPTIDE-[Amidated]"`,
               position: i,
               residue: seq.seq[i].value,
               name: mod.modValue.primaryValue,
-              mass: mod.mass,
               source: mod.source || 'Unknown'
             });
           });
