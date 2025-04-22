@@ -199,11 +199,11 @@ body.dark-mode {
 
 .pipe-value {
   display: flex;
-  align-items: flex-start; /* Change from center to allow text to wrap */
-  white-space: normal; /* Change from nowrap to normal */
+  align-items: flex-start;
+  white-space: normal;
   overflow-wrap: break-word;
   word-break: break-all;
-  overflow: visible; /* Change from hidden */
+  overflow: visible;
   margin: 2px 0;
   width: 100%;
   font-size: 10px;
@@ -212,11 +212,11 @@ body.dark-mode {
 .pipe-indicator {
   width: 3px;
   height: 14px;
-  min-width: 3px; /* Add min-width to prevent shrinking */
+  min-width: 3px;
   margin-right: 4px;
   border-radius: 1px;
-  align-self: flex-start; /* Align to top when content wraps */
-  margin-top: 3px; /* Small offset to align with text */
+  align-self: flex-start;
+  margin-top: 3px;
 }
 
 .pipe-type-synonym .pipe-indicator { background-color: #2196F3; }
@@ -355,13 +355,13 @@ body.dark-mode {
 }
 
 .global-box {
-  background-color: rgba(156, 39, 176, 0.05);
-  border-left: 3px solid rgba(156, 39, 176, 0.5);
+  background-color: rgba(103, 58, 183, 0.05);
+  border-left: 3px solid rgba(103, 58, 183, 0.5);
   min-width: 140px;
 }
 
 .global-box .terminal-header {
-  color: #9C27B0;
+  color: #673AB7;
 }
 
 .global-fixed-mods {
@@ -377,8 +377,8 @@ body.dark-mode {
   position: relative;
   margin-bottom: 2px;
   padding: 2px 4px;
-  background-color: rgba(255, 152, 0, 0.05);
-  border-left: 2px solid rgba(255, 152, 0, 0.5);
+  background-color: rgba(0, 188, 212, 0.05);
+  border-left: 2px solid rgba(0, 188, 212, 0.5);
   border-radius: 2px;
   max-width: 100px;
 }
@@ -397,8 +397,8 @@ body.dark-mode {
 
 .sequence-ambiguous-residue {
   position: relative;
-  background-color: rgba(255, 193, 7, 0.1);
-  border: 1px dashed rgba(255, 193, 7, 0.6);
+  background-color: rgba(205, 220, 57, 0.1);
+  border: 1px dashed rgba(205, 220, 57, 0.6);
 }
 
 .sequence-ambiguity-indicator {
@@ -408,8 +408,8 @@ body.dark-mode {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #FFC107;
-  color: #000;
+  background-color: #FF5722;
+  color: white;
   font-size: 10px;
   font-weight: bold;
   display: flex;
@@ -462,7 +462,7 @@ body.dark-mode {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: #9C27B0;
+  background-color: #3F51B5;
   color: white;
   font-size: 12px;
   font-weight: bold;
