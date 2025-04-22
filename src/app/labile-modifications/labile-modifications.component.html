@@ -1,0 +1,111 @@
+<div class="container">
+  <h1 class="mat-headline-5">Labile Modifications in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>What are Labile Modifications?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Labile modifications are post-translational modifications that can be easily lost during
+        mass spectrometry fragmentation. They are particularly important in glycoproteomics where glycans
+        can detach from peptides during analysis.
+      </p>
+      <p>
+        ProForma notation uses curly braces <code>{{"{}"}}</code> at the beginning of a sequence to represent
+        labile modifications, indicating that the modification is associated with the peptide but its
+        exact position may not be known or maintained during analysis.
+      </p>
+      <p>
+        Glycans are the most common example of labile modifications in proteomics, as they can
+        fragment during collision-induced dissociation (CID) and other fragmentation methods.
+      </p>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Notation Syntax</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Labile modifications use the following syntax in ProForma:</p>
+
+      <mat-list>
+        <mat-list-item>
+          <code>{{'{'}}Source:Name{{'}'}}PEPTIDE</code>: A labile modification at the beginning of the sequence
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>{{'{'}}Glycan:Hex{{'}'}}PEPTIDE</code>: A hexose (sugar) modification that can dissociate from the peptide
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>{{'{'}}Glycan:Hex{{'}'}}{{'{'}}Glycan:NeuAc{{'}'}}PEPTIDE</code>: Multiple labile modifications
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>{{'{'}}Glycan:HexNAc(1)Hex(3)NeuAc(2){{'}'}}PEPTIDE</code>: Complex glycan structure
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Examples</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group class="example-selector">
+        <mat-button-toggle (click)="setExample('basic')">Basic Glycan</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('multiple')">Multiple Glycans</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('complex')">Complex Glycan</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('combined')">With Other Mods</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <h3 class="mat-subtitle-1 mt-4">ProForma Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentExample}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsed Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{parsedOutput}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>API Methods</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS stores labile modifications in the <code>mods</code> Map with key <code>-3</code>:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Accessing Labile Mods">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['access']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Working with Multiple Glycans">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['multiple']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Creating Labile Mods">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['create']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Complex Glycan Structures">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['complex']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -5,6 +5,8 @@ import {BasicUsageComponent} from './basic-usage/basic-usage.component';
 import {AdvancedUsageComponent} from './advanced-usage/advanced-usage.component';
 import {GlobalModificationsComponent} from './global-modifications/global-modifications.component';
 import {UnknownModificationsComponent} from './unknown-modifications/unknown-modifications.component';
+import {LabileModificationsComponent} from './labile-modifications/labile-modifications.component';
+import {GlycanValidationComponent} from './glycan-validation/glycan-validation.component';
 
 export const routes: Routes = [
   { path: 'parser', component: ParserComponent },
@@ -13,6 +15,8 @@ export const routes: Routes = [
   { path: 'advanced-usage', component: AdvancedUsageComponent },
   { path: 'global-modifications', component: GlobalModificationsComponent },
   { path: 'unknown-modifications', component: UnknownModificationsComponent},
+  { path: 'labile-modifications', component: LabileModificationsComponent},
+  { path: 'glycan-validation', component: GlycanValidationComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 ];

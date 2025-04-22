@@ -1,0 +1,218 @@
+<div class="container">
+  <h1 class="mat-headline-5">Glycan Validation in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>What is Glycan Validation?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        SequalJS provides built-in utilities to validate that glycan structures follow the standard
+        notation used in glycoproteomics. This helps ensure that your glycan representations are
+        well-formed and consistent with community standards.
+      </p>
+      <p>
+        The validation checks that:
+      </p>
+      <mat-list>
+        <mat-list-item>Monosaccharide types use standard nomenclature (Hex, HexNAc, NeuAc, etc.)</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>The overall structure follows the pattern <code>MonoType(Count)</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>No invalid characters or formatting are present</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Glycan Structure Validation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Try validating different glycan structures:</p>
+
+      <mat-button-toggle-group class="example-selector">
+        <mat-button-toggle (click)="setGlycanExample('valid1')">N-glycan</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('valid2')">High Mannose</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('valid3')">Sialylated</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('valid4')">Simple</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid1')">Invalid Type</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid2')">Invalid Format</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid3')">Zero Count</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid4')">Decimal Count</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="custom-input-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Enter custom glycan structure</mat-label>
+          <input matInput [(ngModel)]="customGlycan" placeholder="e.g., HexNAc(2)Hex(3)">
+          <button mat-icon-button matSuffix (click)="validateCustomGlycan()" aria-label="Validate">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <h3 class="mat-subtitle-1">Current Glycan Structure:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentGlycan}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Validation Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{validationResult}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Validation API</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS provides the <code>validateGlycan</code> method to check glycan structure validity:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Basic Usage">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['validatingGlycan']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Monosaccharide Parsing">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['monoParsing']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Validating Glycans in Sequences</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Validate glycans in the context of a peptide sequence:</p>
+
+      <mat-button-toggle-group class="example-selector">
+        <mat-button-toggle (click)="setSequenceExample('labile')">Labile Glycan</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('attached')">GNO Glycan</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('custom')">Site-specific</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="custom-input-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Enter custom ProForma sequence</mat-label>
+          <input matInput [(ngModel)]="customSequence" placeholder="e.g., {Glycan:Hex(1)}PEPTIDE">
+          <button mat-icon-button matSuffix (click)="parseCustomSequence()" aria-label="Parse">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <h3 class="mat-subtitle-1">Current Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentSequence}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsing Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{sequenceResult}}</pre>
+      </mat-card>
+
+      <mat-tab-group class="mt-4">
+        <mat-tab label="Labile Glycans">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['accessLabile']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="GNO Glycans">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['gno']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Finding All Glycans">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['findAll']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Glycan Notation Reference</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Standard glycan notation in ProForma follows monosaccharide composition representation:
+      </p>
+
+      <h3 class="mat-subtitle-1">Common Monosaccharides</h3>
+      <mat-table [dataSource]="[
+        {abbr: 'Hex', name: 'Hexose', examples: 'Glucose, Mannose, Galactose'},
+        {abbr: 'HexNAc', name: 'N-acetylhexosamine', examples: 'N-acetylglucosamine (GlcNAc), N-acetylgalactosamine (GalNAc)'},
+        {abbr: 'NeuAc', name: 'N-acetylneuraminic acid', examples: 'Sialic acid'},
+        {abbr: 'dHex', name: 'Deoxyhexose', examples: 'Fucose, Rhamnose'},
+        {abbr: 'Pent', name: 'Pentose', examples: 'Xylose, Arabinose'},
+        {abbr: 'HexA', name: 'Hexuronic acid', examples: 'Glucuronic acid, Iduronic acid'}
+      ]" class="mat-elevation-z2">
+        <ng-container matColumnDef="abbr">
+          <mat-header-cell *matHeaderCellDef>Abbreviation</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.abbr}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="examples">
+          <mat-header-cell *matHeaderCellDef>Examples</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.examples}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['abbr', 'name', 'examples']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['abbr', 'name', 'examples'];"></mat-row>
+      </mat-table>
+
+      <h3 class="mat-subtitle-1 mt-4">Common Glycan Compositions</h3>
+      <mat-table [dataSource]="[
+        {name: 'Core N-glycan', composition: 'HexNAc(2)Hex(3)', description: 'Basic core structure of N-linked glycans'},
+        {name: 'Complex biantennary', composition: 'HexNAc(4)Hex(5)NeuAc(2)', description: 'Complex biantennary N-glycan with terminal sialic acids'},
+        {name: 'High mannose', composition: 'HexNAc(2)Hex(8)', description: 'High mannose-type N-glycan'},
+        {name: 'Core fucosylated', composition: 'Fuc(1)HexNAc(2)Hex(3)', description: 'N-glycan core with fucose modification'},
+        {name: 'O-GalNAc core 1', composition: 'HexNAc(1)Hex(1)', description: 'Basic core structure of mucin-type O-glycans'},
+        {name: 'Sialylated O-glycan', composition: 'HexNAc(1)Hex(1)NeuAc(1)', description: 'O-glycan with sialic acid'}
+      ]" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="composition">
+          <mat-header-cell *matHeaderCellDef>Composition</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.composition}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['name', 'composition', 'description']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['name', 'composition', 'description'];"></mat-row>
+      </mat-table>
+
+      <h3 class="mat-subtitle-1 mt-4">Glycan Representation in ProForma</h3>
+      <mat-list>
+        <mat-list-item><strong>Labile Glycans:</strong> <code>{{'{'}}Glycan:HexNAc(2)Hex(3){{'}'}}PEPTIDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>N-linked Glycan:</strong> <code>PEPTN[Glycan:HexNAc(2)Hex(3)]IDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>O-linked Glycan:</strong> <code>PEPTIDES[Glycan:HexNAc(1)Hex(1)]KN</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>GNO Reference:</strong> <code>PEPTN[GNO:G59626AS]IDE</code></mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
