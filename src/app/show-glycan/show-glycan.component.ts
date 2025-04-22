@@ -1,10 +1,13 @@
 import {Component, Input, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {WebService} from '../services/web.service';
+import {ShowOriginalSizeGlycanImageDialogComponent} from './show-original-size-glycan-image-dialog/show-original-size-glycan-image-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-show-glycan',
-  imports: [],
+  imports: [
+    ShowOriginalSizeGlycanImageDialogComponent,
+  ],
   templateUrl: './show-glycan.component.html',
   styleUrl: './show-glycan.component.scss'
 })
@@ -17,6 +20,10 @@ export class ShowGlycanComponent {
   get glycanId(): string | undefined {
     return this._glycanId;
   }
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
+  showImage(imageUrl: string) {
+    const ref = this.dialog.open(ShowOriginalSizeGlycanImageDialogComponent)
+    ref.componentInstance.imageUrl = imageUrl;
+  }
 }
