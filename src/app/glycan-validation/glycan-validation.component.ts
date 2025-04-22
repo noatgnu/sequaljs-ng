@@ -71,7 +71,15 @@ export class GlycanValidationComponent {
     custom: 'PEPTN[Glycan:HexNAc(1)Hex(3)]IDEK'
   };
 
-  customGlycan = '';
+  private _customGlycan = '';
+  set customGlycan(glycan: string) {
+    this._customGlycan = glycan;
+    this.validateCustomGlycan();
+  }
+
+  get customGlycan(): string {
+    return this._customGlycan;
+  }
   private _customSequence = '';
   set customSequence(sequence: string) {
     this._customSequence = sequence;
@@ -134,8 +142,8 @@ const nResidueIndex = 4; // zero-based indexing
 const nResidue = seq.seq[nResidueIndex];
 // By default, GNO or G source annotation will be given valid glycan status
 if (nResidue.mods && nResidue.mods.length > 0) {
-              const gnoMod = nResidue.mods[0];
-              console.log(\`GNO ID: \${gnoMod.modValue.primaryValue}\`);
+  const gnoMod = nResidue.mods[0];
+  console.log(\`GNO ID: \${gnoMod.modValue.primaryValue}\`);
   console.log(\`Source: \${gnoMod.source}\`); // Should be "GNO"
   console.log(\`Is valid: \${gnoMod.modValue.pipeValues[0].isValidGlycan}\`);
 }`,
