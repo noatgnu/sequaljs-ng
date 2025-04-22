@@ -5,6 +5,7 @@ import {MatCardHeader, MatCard, MatCardTitle, MatCardContent} from '@angular/mat
 import {MatDivider, MatList, MatListItem} from '@angular/material/list';
 import {FormsModule} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatButton} from '@angular/material/button';
 
 
 @Component({
@@ -20,7 +21,8 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
     MatListItem,
     FormsModule,
     MatLabel,
-    MatFormField
+    MatFormField,
+    MatButton
   ],
   templateUrl: './basic-usage.component.html',
   styleUrl: './basic-usage.component.scss'
@@ -32,7 +34,7 @@ export class BasicUsageComponent {
 
   codeExamples = {
     installation: `npm install sequaljs`,
-    importExample: `import { Sequence } from 'sequaljs';`,
+    importExample: `import { Sequence } from 'sequaljs/dist/sequence';`,
     basicParsing: `// Parse a simple peptide with modification
 const seq = Sequence.fromProforma('ELVIS[Phospho]K');
 console.log(seq.seq[4].value); // "S"
