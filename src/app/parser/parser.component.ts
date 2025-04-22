@@ -69,7 +69,8 @@ export class ParserComponent implements OnInit {
     "[Phospho]^2?[Acetyl]-EM[Oxidation]EVTSESPEK",
     "SEK[XLMOD:02001#XL1]UENCE//EMEVTK[#XL1]SESPEK",
     "PRT(EC[Carbamidomethyl]FRMS)[+19.0523]ISK",
-    "EM[Oxidation]EVT[#g1(0.01)]S[#g1(0.09)]ES[Phospho#g1(0.90)]PEK"
+    "EM[Oxidation]EVT[#g1(0.01)]S[#g1(0.09)]ES[Phospho#g1(0.90)]PEK",
+    "NEEYN[GNO:G59626AS]K"
   ]
   selectedExample: string = "";
   sequence: string = 'ELVIS[Unimod:21|Phospho|INFO:Validated]K';
@@ -129,14 +130,11 @@ export class ParserComponent implements OnInit {
 
     try {
       this.parsedSequence = Sequence.fromProforma(sequence);
-      // Rest of your existing success handling
       if (this.parsedSequence) {
-        // Your existing code for handling global mods
       }
     } catch (error) {
       console.error('Error parsing sequence:', error);
       this.parsedSequence = undefined;
-      // Capture the error message
       this.parsingError = error instanceof Error
         ? error.message
         : 'Invalid sequence format';
