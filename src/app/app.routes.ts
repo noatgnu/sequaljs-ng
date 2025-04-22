@@ -7,6 +7,7 @@ import {GlobalModificationsComponent} from './global-modifications/global-modifi
 import {UnknownModificationsComponent} from './unknown-modifications/unknown-modifications.component';
 import {LabileModificationsComponent} from './labile-modifications/labile-modifications.component';
 import {GlycanValidationComponent} from './glycan-validation/glycan-validation.component';
+import {TerminalModificationsComponent} from './terminal-modifications/terminal-modifications.component';
 
 export const routes: Routes = [
   { path: 'parser', component: ParserComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'unknown-modifications', component: UnknownModificationsComponent},
   { path: 'labile-modifications', component: LabileModificationsComponent},
   { path: 'glycan-validation', component: GlycanValidationComponent},
+  { path: 'terminal-modifications', component: TerminalModificationsComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 ];

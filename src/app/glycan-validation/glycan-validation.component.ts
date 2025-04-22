@@ -225,7 +225,6 @@ console.log(\`Is valid glycan: \${isValid}\`); // true`
       const seq = Sequence.fromProforma(sequence);
       const glycans: any = [];
 
-      // Check for labile glycans
       const labileMods = seq.mods.get(-3);
       if (labileMods) {
         labileMods.forEach(mod => {
@@ -239,7 +238,6 @@ console.log(\`Is valid glycan: \${isValid}\`); // true`
         });
       }
 
-      // Check for attached glycans
       for (let i = 0; i < seq.seq.length; i++) {
         const mods = seq.seq[i].mods || [];
         mods.forEach(mod => {
