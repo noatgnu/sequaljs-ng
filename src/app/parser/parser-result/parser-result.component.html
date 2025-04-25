@@ -131,20 +131,18 @@
           <div class="terminal-section chimeric-section">
             <div class="section-separator"></div>
             <div class="terminal-box chimeric-box">
-              <div class="terminal-header">Chimeric Information</div>
+              <div class="terminal-header">Ionic/Chimeric Information</div>
               <div class="terminal-content">
-                <div class="chimeric-info">
-                  <div class="info-row">
-                    <span class="info-label">Charge:</span>
-                    <span class="info-value">{{sequence.charge || 'Not specified'}}</span>
-                  </div>
-                  @if (sequence.ionicSpecies) {
-                    <div class="info-row">
-                      <span class="info-label">Ionic Species:</span>
-                      <span class="info-value">{{sequence.ionicSpecies}}</span>
-                    </div>
-                  }
+                <div class="info-row">
+                  <span class="info-label">Charge:</span>
+                  <span class="info-value">{{sequence.charge || 'Not specified'}}</span>
                 </div>
+                @if (sequence.ionicSpecies) {
+                  <div class="info-row">
+                    <span class="info-label">Ionic Species:</span>
+                    <span class="info-value">{{sequence.ionicSpecies}}</span>
+                  </div>
+                }
               </div>
             </div>
           </div>
