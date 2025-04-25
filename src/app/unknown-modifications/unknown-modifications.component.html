@@ -29,6 +29,8 @@
         <mat-list-item>
           <code>[Mod1][Mod2]?SEQUENCE</code>: Multiple modifications with unknown positions
         </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><code>[Mod]^2?SEQUENCE</code>: Multiple of same modifications with unknown positions with <code>^</code></mat-list-item>
       </mat-list>
     </mat-card-content>
   </mat-card>
@@ -42,6 +44,7 @@
         <mat-button-toggle (click)="setExample('basic')">Basic Example</mat-button-toggle>
         <mat-button-toggle (click)="setExample('multiple')">Multiple Unknown Mods</mat-button-toggle>
         <mat-button-toggle (click)="setExample('combined')">Combined with Known Mods</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('withCaret')">With Caret</mat-button-toggle>
       </mat-button-toggle-group>
 
       <h3 class="mat-subtitle-1 mt-4">ProForma Sequence:</h3>

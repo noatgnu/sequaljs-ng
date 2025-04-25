@@ -485,3 +485,32 @@ body.dark-mode {
   max-width: 100%;
   word-wrap: break-word;
 }
+
+.chimeric-section {
+  margin-top: 10px;
+}
+
+.chimeric-box {
+  background-color: rgba(255, 235, 205, 0.5);
+  border-radius: 4px;
+}
+
+.chimeric-info {
+  padding: 5px;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 4px;
+  align-items: center;
+}
+
+.info-label {
+  font-weight: 500;
+  margin-right: 8px;
+  min-width: 100px;
+}
+
+.info-value {
+  font-family: monospace;
+}

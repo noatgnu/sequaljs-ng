@@ -1,0 +1,89 @@
+<div class="container">
+  <h1 class="mat-headline-5">Chimeric Spectra in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>What are Chimeric Spectra?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Chimeric spectra are complex mass spectra that contain overlapping signals from multiple ions, making it challenging to identify individual components.
+      </p>
+
+      <p>
+        Proforma notation allows for the representation of these complex spectra by specifying how ion sequence could be joined as well as how the charge and species are reprented.
+      </p>
+
+      <mat-list>
+        <mat-list-item><strong>Ion:</strong> represented by a single <code>/</code> appearing at the end of each sequence together with the charge and charge species if available</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Charge:</strong> Placed after <code>/</code> at the end of the sequence, must be numeric, can be either positive or negative. Representing the gain or lost of protons from neutral</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Ionic Species:</strong> Identification of the ion that the charge is supposed to be derived from if available</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Multiple peptidoform:</strong> Multiple ions can be represented as a single string delimited by <code>+</code></mat-list-item>
+        <mat-list-item><strong>Example:</strong> <code>EMEVEESPEK/2+ELVISLIVER/3</code></mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Parsing Chimeric Spectra</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Try parsing different chimetric sequences:</p>
+
+      <mat-button-toggle-group class="example-selector">
+        <mat-button-toggle (click)="setSequenceExample('single')">With charge only</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('singleWithSpecies')">Charge + Species</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('multiple')">Multiple ions</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('complex')">Complex ion</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="custom-input-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Enter custom ProForma sequence</mat-label>
+          <input matInput [(ngModel)]="customSequence" placeholder="e.g., PEPTIDE/2">
+          <button mat-icon-button matSuffix (click)="parseCustomSequence()" aria-label="Parse">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <h3 class="mat-subtitle-1">Current Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentSequence}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsing Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{sequenceResult}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Terminal Modification API</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS provides several methods to work with terminal modifications:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Parsing Sequences">
+          <mat-card class="code-card">
+            <pre><code>{{terminalCode['parsing']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Adding Charge and Species Info">
+          <mat-card class="code-card">
+            <pre><code>{{terminalCode['adding']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

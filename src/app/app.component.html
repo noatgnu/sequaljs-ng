@@ -19,7 +19,7 @@
           <mat-icon>web</mat-icon>
         </a>
         <button mat-icon-button class="theme-toggle" (click)="toggleTheme()">
-          <mat-icon>{{isDarkTheme ? 'brightness_7' : 'brightness_4'}}</mat-icon>
+          <mat-icon>{{isDarkTheme ? 'brightness_4' : 'brightness_7'}}</mat-icon>
         </button>
       </div>
     </div>
@@ -40,23 +40,27 @@
           <span matListItemTitle>Home</span>
         </a>
         <a mat-list-item routerLink="/terminal-modifications" routerLinkActive="active">
-          <mat-icon matListItemIcon>code</mat-icon>
+          <mat-icon matListItemIcon>terminal</mat-icon>
           <span matListItemTitle>Terminal Modifications</span>
         </a>
         <a mat-list-item routerLink="/global-modifications" routerLinkActive="active">
-          <mat-icon matListItemIcon>code</mat-icon>
+          <mat-icon matListItemIcon>public</mat-icon>
           <span matListItemTitle>Global Modifications</span>
         </a>
         <a mat-list-item routerLink="/unknown-modifications" routerLinkActive="active">
-          <mat-icon matListItemIcon>code</mat-icon>
-          <span matListItemTitle>Unknown Modifications</span>
+          <mat-icon matListItemIcon>question_mark</mat-icon>
+          <span matListItemTitle>Unknown Position Mods</span>
         </a>
         <a mat-list-item routerLink="/labile-modifications" routerLinkActive="active">
-          <mat-icon matListItemIcon>code</mat-icon>
+          <mat-icon matListItemIcon>link_off</mat-icon>
           <span matListItemTitle>Labile Modifications</span>
         </a>
+        <a mat-list-item routerLink="/chimeric-spectra" routerLinkActive="active">
+          <mat-icon matListItemIcon>plus_one</mat-icon>
+          <span matListItemTitle>Chimeric Spectra</span>
+        </a>
         <a mat-list-item routerLink="/glycan-validation" routerLinkActive="active">
-          <mat-icon matListItemIcon>code</mat-icon>
+          <mat-icon matListItemIcon>link</mat-icon>
           <span matListItemTitle>Glycan Validation</span>
         </a>
         <mat-divider></mat-divider>

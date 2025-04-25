@@ -31,8 +31,6 @@ import {ParserResultComponent} from './parser-result/parser-result.component';
     MatIcon,
     MatInput,
     MatFormField,
-    MatButton,
-    MatTooltip,
     MatCardHeader,
     MatCardSubtitle,
     MatCardContent,
@@ -41,11 +39,6 @@ import {ParserResultComponent} from './parser-result/parser-result.component';
     MatHint,
     MatLabel,
     MatIconButton,
-    DisplayModComponent,
-    MatAccordion,
-    MatExpansionPanel,
-    MatExpansionPanelTitle,
-    MatExpansionPanelHeader,
     NgClass,
     MatSelectModule,
     FormsModule,
@@ -70,7 +63,8 @@ export class ParserComponent implements OnInit {
     "SEK[XLMOD:02001#XL1]UENCE//EMEVTK[#XL1]SESPEK",
     "PRT(EC[Carbamidomethyl]FRMS)[+19.0523]ISK",
     "EM[Oxidation]EVT[#g1(0.01)]S[#g1(0.09)]ES[Phospho#g1(0.90)]PEK",
-    "NEEYN[GNO:G59626AS]K"
+    "NEEYN[GNO:G59626AS]K",
+    "EMEVEESPEK/2[+2Na+,+H+]"
   ]
   selectedExample: string = "";
   sequence: string = 'ELVIS[Unimod:21|Phospho|INFO:Validated]K';

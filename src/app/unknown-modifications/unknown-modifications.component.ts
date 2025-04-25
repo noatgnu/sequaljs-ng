@@ -29,6 +29,7 @@ export class UnknownModificationsComponent {
     basic: '[Phospho]?EMEVNESPEK',
     multiple: '[Phospho][Acetyl]?EMEVNESPEK',
     combined: '[Acetyl]?EMEVS[Phospho]ES[Oxidation]PEK',
+    withCaret: '[Phospho]^2?EMEVNESTSPEK',
     programmaticAccess: '[Phospho]?EMEVNESPEK'
   };
 

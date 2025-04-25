@@ -23,10 +23,12 @@ import {Sequence} from 'sequaljs/dist/sequence';
 export class ParserResultComponent {
   private _sequence: Sequence|undefined = undefined
   get sequence(): Sequence|undefined {
+
     return this._sequence
   }
   @Input() set sequence(value: Sequence|undefined) {
     this._sequence = value
+    console.log(value)
     if (this._sequence) {
       this.globalFixedModsMap = {}
       this._sequence.globalMods.forEach((mod: GlobalModification) => {
