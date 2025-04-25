@@ -102,6 +102,23 @@ seq.ionicSpecies = "+Na+"
 
 const proforma = seq.toProforma();
 console.log(proforma); // "PEPTIDE/2[+Na+]"`,
+    chimeric: `import { Sequence } from 'sequaljs/dist/sequence';
+
+// Create a chimeric sequence
+const seq1 = new Sequence("PEPTIDE");
+const seq2 = new Sequence("PEPTIDE");
+
+seq1.isChimeric = true; // Set the sequence as chimeric
+seq1.charge = 2; // Set the charge to +2
+seq2.isChimeric = true; // Set the sequence as chimeric
+seq2.charge = 2; // Set the charge to +2
+seq1.ionicSpecies = "+Na+"; // Set the ionic species to +Na+
+
+const seq1.peptidoforms = [seq1, seq2]; // Add the chimeric sequence to the peptidoforms
+const proforma = seq1.toProforma();
+console.log(proforma); // "PEPTIDE/2[+Na+]+PEPTIDE/2";
+`
+
   }
   ngOnInit(): void {
     this.parseSequence(this.currentSequence);

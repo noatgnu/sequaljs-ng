@@ -9,6 +9,7 @@ import {LabileModificationsComponent} from './labile-modifications/labile-modifi
 import {GlycanValidationComponent} from './glycan-validation/glycan-validation.component';
 import {TerminalModificationsComponent} from './terminal-modifications/terminal-modifications.component';
 import {ChimericSpectraComponent} from './chimeric-spectra/chimeric-spectra.component';
+import {PipeValuesComponent} from './pipe-values/pipe-values.component';
 
 export const routes: Routes = [
   { path: 'parser', component: ParserComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'glycan-validation', component: GlycanValidationComponent},
   { path: 'terminal-modifications', component: TerminalModificationsComponent},
   { path: 'chimeric-spectra', component: ChimericSpectraComponent},
+  { path: 'pipe-values', component: PipeValuesComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 ];
