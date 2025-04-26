@@ -155,4 +155,13 @@ export class ParserComponent implements OnInit {
     });
   }
 
+  copySequence() {
+    if (this.sequence) {
+      navigator.clipboard.writeText(this.sequence).then(() => {
+        console.log('Sequence copied to clipboard');
+      }).catch(err => {
+        console.error('Failed to copy sequence: ', err);
+      });
+    }
+  }
 }
