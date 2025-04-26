@@ -18,10 +18,10 @@ export interface UnimodSpecificity {
 }
 
 export interface UnimodModification {
-  id: string;           // UNIMOD:21
-  numericId: string;    // 21
-  name: string;         // Phospho
-  description?: string; // Phosphorylation...
+  id: string;
+  numericId: string;
+  name: string;
+  description?: string;
   deltaMonoMass?: number;
   deltaAvgMass?: number;
   composition?: string;
@@ -63,12 +63,9 @@ export class UnimodService {
    * Parse OBO file content and build unimod map
    */
   private parseOboFile(content: string): Map<string, UnimodModification> {
-    console.log(content)
     this.unimodMap.clear();
 
-    // Split the file by term sections
     const terms = content.split('[Term]').slice(1);
-    console.log(terms.length)
     for (const term of terms) {
       if (!term.trim()) continue;
 
@@ -90,7 +87,6 @@ export class UnimodService {
       specificities: []
     };
 
-    // Track specificities by group number
     const specificityGroups = new Map<string, Partial<UnimodSpecificity>>();
 
     for (const line of lines) {
@@ -111,7 +107,6 @@ export class UnimodService {
       else if (line.startsWith('xref:')) {
         const xrefLine = line.substring(5).trim();
 
-        // Extract delta masses
         if (xrefLine.startsWith('delta_mono_mass')) {
           const match = xrefLine.match(/delta_mono_mass "([^"]+)"/);
           if (match) entry.deltaMonoMass = parseFloat(match[1]);

@@ -37,3 +37,74 @@ h3 {
   color: rgba(0,0,0,0.6);
   font-style: italic;
 }
+
+.compliance-status {
+  margin-bottom: 20px;
+}
+
+.compliance-level {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.compliance-level p {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.compliance-badge {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.compliance-badge.full {
+  background-color: rgba(76, 175, 80, 0.15);
+  color: #2e7d32;
+}
+
+.compliance-badge.base {
+  background-color: rgba(33, 150, 243, 0.15);
+  color: #1976d2;
+}
+
+.compliance-badge.level2 {
+  background-color: rgba(156, 39, 176, 0.15);
+  color: #7b1fa2;
+}
+
+.compliance-badge.topdown {
+  background-color: rgba(255, 152, 0, 0.15);
+  color: #e65100;
+}
+
+.compliance-badge.crosslink {
+  background-color: rgba(121, 85, 72, 0.15);
+  color: #5d4037;
+}
+
+.compliance-badge.glycan {
+  background-color: rgba(0, 188, 212, 0.15);
+  color: #00838f;
+}
+
+.compliance-badge.spectral {
+  background-color: rgba(233, 30, 99, 0.15);
+  color: #c2185b;
+}
+
+.feature-list {
+  padding-left: 20px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.feature-list li {
+  margin-bottom: 6px;
+}

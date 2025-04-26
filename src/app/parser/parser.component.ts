@@ -42,7 +42,12 @@ import {ParserResultComponent} from './parser-result/parser-result.component';
     NgClass,
     MatSelectModule,
     FormsModule,
-    ParserResultComponent
+    ParserResultComponent,
+    MatTooltip,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader,
+    MatExpansionPanelTitle,
   ],
   templateUrl: './parser.component.html',
   styleUrl: './parser.component.scss'
@@ -88,7 +93,6 @@ export class ParserComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Handle initial query params
     this.route.queryParams.subscribe(params => {
       if (params['seq']) {
         this.sequence = params['seq'];
@@ -99,7 +103,6 @@ export class ParserComponent implements OnInit {
       }
     });
 
-    // Set up debounced sequence parsing
     this.form.get('sequence')?.valueChanges
       .pipe(
         debounceTime(300),
@@ -135,7 +138,6 @@ export class ParserComponent implements OnInit {
         : 'Invalid sequence format';
     }
 
-    console.log('Parsed sequence:', this.parsedSequence);
     this.isProcessing = false;
   }
 

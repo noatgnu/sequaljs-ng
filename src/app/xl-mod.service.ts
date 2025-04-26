@@ -190,7 +190,6 @@ export class XLModService {
             targetId: match[2]
           });
 
-          // Handle specific relationships
           if (match[1] === 'has_reactive_group' && entity.reactiveGroups) {
             entity.reactiveGroups.push(match[2]);
           }

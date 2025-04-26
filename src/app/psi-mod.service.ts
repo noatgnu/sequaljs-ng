@@ -158,7 +158,6 @@ export class PSIModService {
             description: xrefMatch[4] || undefined
           });
 
-          // Extract mass values from specific xrefs
           if (xrefMatch[1] === 'DiffMono') {
             entry.monoisotopicMass = parseFloat(xrefMatch[2]);
           }
@@ -296,7 +295,6 @@ export class PSIModService {
    * Get a modification by RESID ID
    */
   getModificationByResid(residId: string): PSIModModification | undefined {
-    console.log(this.residToModMap)
     const modId = this.residToModMap.get(residId);
     return modId ? this.psiModMap.get(modId) : undefined;
   }

@@ -219,18 +219,58 @@ body.dark-mode {
 
 }
 
-.pipe-type-synonym .pipe-indicator { background-color: #2196F3; }
-.pipe-type-info_tag .pipe-indicator { background-color: #4CAF50; }
-.pipe-type-mass .pipe-indicator { background-color: #9C27B0; }
-.pipe-type-observed_mass .pipe-indicator { background-color: #BA68C8; }
-.pipe-type-crosslink .pipe-indicator { background-color: #FF9800; }
-.pipe-type-branch .pipe-indicator { background-color: #FFEB3B; }
-.pipe-type-ambiguity .pipe-indicator { background-color: #F44336; }
-.pipe-type-glycan .pipe-indicator { background-color: #009688; }
-.pipe-type-gap .pipe-indicator { background-color: #9E9E9E; }
-.pipe-type-formula .pipe-indicator { background-color: #E91E63; }
-.pipe-type-unimod .pipe-indicator {  background-color: #3F51B5; }
-.pipe-type-psimod .pipe-indicator {  background-color: #3F51B9; }
+.pipe-type-synonym {
+  background-color: rgba(33, 150, 243, 0.05);
+  border-left: 2px solid #3F51B9;
+}
+.pipe-type-info_tag {
+  background-color: rgba(76, 175, 80, 0.05);
+  border-left: 2px solid #4CAF50;
+}
+.pipe-type-mass {
+  background-color: rgba(255, 193, 7, 0.05);
+  border-left: 2px solid #9C27B0;
+}
+.pipe-type-observed_mass {
+  background-color: rgba(186, 104, 200, 0.05);
+  border-left: 2px solid #BA68C8;
+}
+.pipe-type-crosslink {
+  background-color: rgba(139, 195, 74, 0.05);
+  border-left: 2px solid #FF9800;
+}
+.pipe-type-branch {
+  background-color: rgba(255, 152, 0, 0.05);
+  border-left: 2px solid #FFEB3B;
+}
+.pipe-type-ambiguity {
+  background-color: rgba(205, 220, 57, 0.05);
+  border-left: 2px solid #F44336;
+}
+.pipe-type-glycan {
+  background-color: rgba(0, 188, 212, 0.05);
+  border-left: 2px solid #009688;
+}
+.pipe-type-gap {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-left: 2px solid #9E9E9E;
+}
+.pipe-type-formula {
+  background-color: rgba(0, 188, 212, 0.05);
+  border-left: 2px solid #E91E63;
+}
+.pipe-type-unimod {
+  background-color: rgba(33, 150, 243, 0.05);
+  border-left: 2px solid #3F51B9;
+}
+.pipe-type-psimod {
+  background-color: rgba(33, 150, 243, 0.05);
+  border-left: 2px solid #3F51B9;
+}
+.pipe-type-resid {
+  background-color: rgba(33, 150, 243, 0.05);
+  border-left: 2px solid #3F51B9;
+}
 
 .legend-container {
   display: flex;
@@ -550,4 +590,144 @@ body.dark-mode {
   width: 16px;
   margin-left: 4px;
   opacity: 0.6;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.pipe-type-resid:hover {
+  background-color: rgba(121, 85, 72, 0.2);
+}
+
+
+.pipe-type-psimod:hover {
+  background-color: rgba(33, 150, 243, 0.2);
+}
+
+.pipe-type-glycan:hover {
+  background-color: rgba(0, 188, 212, 0.2);
+}
+
+.info-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-left: 4px;
+  opacity: 0.6;
+  padding-top: 2px;
+}
+
+.parser-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.examples-section {
+  margin-bottom: 16px;
+}
+
+.examples-title {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: rgba(0,0,0,0.7);
+}
+
+.sequence-actions {
+  display: flex;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.processing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+  color: #3f51b5;
+}
+
+.info-panel {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: rgba(33, 150, 243, 0.08);
+  border-left: 4px solid #2196F3;
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.info-panel-icon {
+  color: #2196F3;
+  margin-right: 16px;
+  font-size: 24px;
+}
+
+.info-panel-content {
+  flex: 1;
+}
+
+.info-panel ul {
+  margin: 8px 0 12px 0;
+  padding-left: 24px;
+}
+
+.info-panel li {
+  margin-bottom: 8px;
+}
+
+.documentation-link {
+  display: flex;
+  align-items: center;
+  color: #2196F3;
+  text-decoration: none;
+  font-weight: 500;
+  gap: 4px;
+}
+
+.documentation-link:hover {
+  text-decoration: underline;
+}
+
+.parsing-error-container {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: rgba(244, 67, 54, 0.08);
+  border-radius: 4px;
+  border-left: 4px solid #f44336;
+  gap: 12px;
+}
+
+.legend-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.legend-item:hover {
+  background-color: rgba(0,0,0,0.04);
+}
+
+.legend-indicator {
+  margin-right: 12px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.legend-label {
+  font-weight: 500;
 }

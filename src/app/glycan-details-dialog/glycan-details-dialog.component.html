@@ -1,0 +1,85 @@
+<h5 mat-dialog-title>Glycan: {{data.glytoucan.glytoucan_ac}}</h5>
+<mat-dialog-content>
+  <div class="glycan-details">
+    <div class="glycan-image-container">
+      <app-show-glycan [glycanId]="data.glytoucan.glytoucan_ac"></app-show-glycan>
+    </div>
+
+    @if (data.glytoucan.glytoucan_ac) {
+      <div class="detail-row">
+        <span class="label">GlyTouCan:</span>
+        <span>{{data.glytoucan.glytoucan_ac}}</span>
+        <a mat-icon-button [href]="data.glytoucan.glytoucan_url" target="_blank">
+          <mat-icon>open_in_new</mat-icon>
+        </a>
+      </div>
+    }
+
+    @if (data.mass) {
+      <div class="detail-row">
+        <span class="label">Mass:</span>
+        <span>{{data.mass}} Da</span>
+      </div>
+    }
+
+    @if (data.composition?.name) {
+      <div class="detail-row">
+        <span class="label">Composition:</span>
+        <span>{{data.composition.name}}</span>
+      </div>
+    }
+
+    @if (data.composition_expanded && data.composition_expanded.length > 0) {
+      <div class="detail-section">
+        <h3>Detailed Composition</h3>
+        <div class="composition-list">
+          @for (comp of data.composition_expanded; track $index) {
+            <div class="detail-row">
+              <span class="label">{{comp.name}}:</span>
+              <span>{{comp.count}}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.classification && data.classification.length > 0) {
+      <div class="detail-section">
+        <h3>Classification</h3>
+        <div class="chips">
+          @for (cls of data.classification; track $index) {
+            <span class="chip">{{cls.type?.name}} - {{cls.subtype?.name}}</span>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.names && data.names.length > 0) {
+      <div class="detail-section">
+        <h3>Names</h3>
+        <div class="chips">
+          @for (name of data.names; track $index) {
+            <span class="chip">{{name.name}} ({{name.domain}})</span>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.glycoct) {
+      <div class="detail-section">
+        <h3>GlycoCT</h3>
+        <p class="code-text">{{data.glycoct}}</p>
+      </div>
+    }
+
+    @if (data.wurcs) {
+      <div class="detail-section">
+        <h3>WURCS</h3>
+        <p class="code-text">{{data.wurcs}}</p>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
