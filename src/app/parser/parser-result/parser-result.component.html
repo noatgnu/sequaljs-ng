@@ -23,7 +23,7 @@
                 }
               </div>
             </div>
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-right"></div>
           </div>
         }
         @if (sequence.mods.has(-3)) {
@@ -38,7 +38,7 @@
                 }
               </div>
             </div>
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-right"></div>
           </div>
         }
         @if (sequence.mods.has(-4)) {
@@ -53,7 +53,7 @@
                 }
               </div>
             </div>
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-right"></div>
           </div>
         }
         @if (sequence.mods.has(-1)) {
@@ -68,7 +68,7 @@
                 }
               </div>
             </div>
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-right"></div>
           </div>
         }
         @if (sequence.sequenceAmbiguities.length > 0) {
@@ -79,7 +79,7 @@
                 <div class="ambiguity-content">{{ambiguity.value}}</div>
               </div>
             }
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-right"></div>
           </div>
         }
         @for (aa of sequence.seq; track $index) {
@@ -91,7 +91,7 @@
 
               <div class="modifications">
                 @for (aaMod of aa.mods; track $index) {
-                  <div class="mod-badge" [class.range-mod]="aaMod.inRange"
+                  <div class="mod-badge" [class.ranges-mod]="aaMod.inRange"
                        [matTooltip]="aaMod.inRange ? 'Potential modification within a range' : ''">
                     @if (aaMod.inRange) {
                       <div class="range-indicator">?</div>
@@ -114,7 +114,7 @@
         }
         @if (sequence.mods.has(-2)) {
           <div class="terminal-section c-terminal-section">
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-left"></div>
             <div class="terminal-box">
               <div class="terminal-header">C-Terminal</div>
               <div class="terminal-content">
@@ -129,7 +129,7 @@
         }
         @if (sequence.isChimeric) {
           <div class="terminal-section chimeric-section">
-            <div class="section-separator"></div>
+            <div class="section-separator section-separator-left"></div>
             <div class="terminal-box chimeric-box">
               <div class="terminal-header">Ionic/Chimeric Information</div>
               <div class="terminal-content">

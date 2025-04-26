@@ -52,11 +52,11 @@ export class ParserComponent implements OnInit {
   examples = [
     "ETFGD[MOD:00093#BRANCH]//R[#BRANCH]ATER",
     "<[MOD:01090]@C>[Phospho]?EM[Oxidation]EVTSECSPEK",
-    'ELVIS[Unimod:21|Phospho|INFO:Validated]K',
+    'ELVIS[Unimod:21|Phospho|INFO:Validated|M:00043|R:AA0034]K',
     "<[S-carboxamidomethyl-L-cysteine]@C>ATPEILTCNSIGCLK",
     "{Glycan:Hex}{Glycan:NeuAc}EMEVNESPEK",
     "(?N)NGTWEM[Oxidation]ESNENFEGYM[Oxidation]K",
-    "ELVIS[U:Phospho|Obs:+79.978]K",
+    "ELVIS[U:21|Obs:+79.978]K",
     "<[Carbamidomethyl|INFO:Standard alkylation]@C>[Acetyl|INFO:Added during processing]-PEPTCDE-[Amidated|INFO:Common C-terminal mod]",
     "<13C><15N>ATPEILTVNSIGQLK",
     "[Phospho]^2?[Acetyl]-EM[Oxidation]EVTSESPEK",

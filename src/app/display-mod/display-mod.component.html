@@ -28,7 +28,7 @@
               @if(pipeValue.source){
                 {{pipeValue.source}}:{{pipeValue.value}}
               }@else{
-                {{pipeValue.value}}
+                {{pipeValue.value}}<mat-icon class="unimod-info-icon">info</mat-icon>
               }
             </ng-template>
             @if (pipeValue.source) {
@@ -39,20 +39,41 @@
                 @if (["GNO", "G"].includes(pipeValue.source.toUpperCase())) {
                   <app-show-glycan [glycanId]="pipeValue.value" class="small-glycan"></app-show-glycan>
                 }
+              } @else if (["XLMOD", "XL", "X", "XL-MOD"].includes(pipeValue.source.toUpperCase()) || pipeValue.isCrosslinkRef)  {
+                  <div class="pipe-value" [ngClass]="'pipe-type-crosslink'" (click)="showXLModDetails(pipeValue.value)">
+                    <div class="pipe-indicator"></div>
+                    {{pipeValue.source}}:{{pipeValue.value}}
+                    <mat-icon class="unimod-info-icon">info</mat-icon>
+                  </div>
+              } @else if (["UNIMOD", "U"].includes(pipeValue.source.toUpperCase())) {
+                  <div class="pipe-value pipe-type-unimod" (click)="showUnimodDetails(pipeValue.value)">
+                    <div class="pipe-indicator"></div>
+                    {{pipeValue.source}}:{{pipeValue.value}}
+                    <mat-icon class="unimod-info-icon">info</mat-icon>
+                  </div>
+              } @else if (["MOD", "M"].includes(pipeValue.source.toUpperCase())) {
+                <div class="pipe-value pipe-type-unimod" (click)="showPSIModDetails(pipeValue.value)">
+                  <div class="pipe-indicator"></div>
+                  {{pipeValue.source}}:{{pipeValue.value}}
+                  <mat-icon class="unimod-info-icon">info</mat-icon>
+                </div>
+              } @else if (["RESID", "R"].includes(pipeValue.source.toUpperCase())) {
+                <div class="pipe-value pipe-type-unimod" (click)="showRESIDDetails(pipeValue.value)">
+                  <div class="pipe-indicator"></div>
+                  {{pipeValue.source}}:{{pipeValue.value}}
+                  <mat-icon class="unimod-info-icon">info</mat-icon>
+                </div>
               } @else {
                 <div class="pipe-value" [ngClass]="'pipe-type-' + pipeValue.type.toLowerCase()">
                   <ng-container *ngTemplateOutlet="pipeValueTemplate"></ng-container>
                 </div>
               }
             } @else {
-              <div class="pipe-value" [ngClass]="'pipe-type-' + pipeValue.type.toLowerCase()">
+              <div class="pipe-value" [ngClass]="'pipe-type-' + pipeValue.type.toLowerCase()" (click)="showSynonymDetails(pipeValue.value)">
                 <ng-container *ngTemplateOutlet="pipeValueTemplate"></ng-container>
               </div>
             }
-
-
           }
-
         }
       }
 

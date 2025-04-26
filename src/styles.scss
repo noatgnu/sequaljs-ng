@@ -216,7 +216,7 @@ body.dark-mode {
   margin-right: 4px;
   border-radius: 1px;
   align-self: flex-start;
-  margin-top: 3px;
+
 }
 
 .pipe-type-synonym .pipe-indicator { background-color: #2196F3; }
@@ -229,6 +229,8 @@ body.dark-mode {
 .pipe-type-glycan .pipe-indicator { background-color: #009688; }
 .pipe-type-gap .pipe-indicator { background-color: #9E9E9E; }
 .pipe-type-formula .pipe-indicator { background-color: #E91E63; }
+.pipe-type-unimod .pipe-indicator {  background-color: #3F51B5; }
+.pipe-type-psimod .pipe-indicator {  background-color: #3F51B9; }
 
 .legend-container {
   display: flex;
@@ -266,11 +268,18 @@ body.dark-mode {
 
 .section-separator {
   position: absolute;
-  right: 0;
   top: 0;
   bottom: 0;
   width: 1px;
   background-color: rgba(0, 0, 0, 0.12);
+}
+
+.section-separator-right {
+  right: 0;
+}
+
+.section-separator-left {
+  left: 0;
 }
 
 .ambiguity-box {
@@ -511,4 +520,34 @@ body.dark-mode {
 
 .info-value {
   font-family: monospace;
+}
+
+.pipe-type-unimod:hover {
+  background-color: rgba(121, 134, 203, 0.2);
+}
+
+.pipe-type-psimod:hover {
+  background-color: rgba(121, 134, 203, 0.2);
+}
+
+.unimod-info-icon {
+  font-size: 16px;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.pipe-type-xlmod:hover {
+  background-color: rgba(139, 195, 74, 0.2);
+}
+
+.pipe-type-synonym:hover {
+  background-color: rgba(33, 150, 243, 0.2);
+}
+
+.xlmod-info-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-left: 4px;
+  opacity: 0.6;
 }

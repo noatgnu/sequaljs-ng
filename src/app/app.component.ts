@@ -12,6 +12,9 @@ import {
 } from '@angular/material/list';
 import {MatIconAnchor, MatIconButton} from '@angular/material/button';
 import {MatTooltip} from '@angular/material/tooltip';
+import {UnimodService} from './unimod.service';
+import {PSIModService} from './psi-mod.service';
+import {XLModService} from './xl-mod.service';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +24,19 @@ import {MatTooltip} from '@angular/material/tooltip';
 })
 export class AppComponent implements OnInit {
   title = 'SequalJS';
-
   isDarkTheme = false;
+
+  constructor(private unimod: UnimodService, private psimod: PSIModService, private xlmod: XLModService ) {
+    this.unimod.loadUnimodDatabase().subscribe((data) => {
+      console.log('Unimod database loaded');
+    })
+    this.psimod.loadPSIModDatabase().subscribe((data) => {
+      console.log('PSIMod database loaded');
+    })
+    this.xlmod.loadXLModDatabase().subscribe((data) => {
+      console.log('XLMod database loaded');
+    })
+  }
 
   ngOnInit() {
     const savedTheme = localStorage.getItem('sequaljs-theme');

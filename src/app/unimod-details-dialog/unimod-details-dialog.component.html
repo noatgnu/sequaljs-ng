@@ -1,0 +1,42 @@
+<h2 mat-dialog-title>{{data.name}} (UNIMOD:{{data.numericId}})</h2>
+<mat-dialog-content>
+  <div class="unimod-details">
+    <div class="detail-row">
+      <span class="label">Description:</span>
+      <span>{{data.description}}</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Mono Mass:</span>
+      <span>{{data.deltaMonoMass}} Da</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Avg Mass:</span>
+      <span>{{data.deltaAvgMass}} Da</span>
+    </div>
+    <div class="detail-row">
+      <span class="label">Composition:</span>
+      <span>{{data.composition}}</span>
+    </div>
+
+    <h3>Specificities</h3>
+    <div class="specificities-list">
+      @for (spec of data.specificities; track $index) {
+        <div class="specificity-item">
+          <span class="site">{{spec.site}}</span>
+          <span class="position">{{spec.position}}</span>
+          @if (spec.neutralLoss) {
+            @for (loss of spec.neutralLoss; track $index) {
+              <span class="neutral-loss">{{loss.mass}}</span>
+            }
+          }
+          @if (spec.classification) {
+            <span class="classification">{{spec.classification}}</span>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
