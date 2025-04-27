@@ -10,6 +10,7 @@ import {GlycanValidationComponent} from './glycan-validation/glycan-validation.c
 import {TerminalModificationsComponent} from './terminal-modifications/terminal-modifications.component';
 import {ChimericSpectraComponent} from './chimeric-spectra/chimeric-spectra.component';
 import {PipeValuesComponent} from './pipe-values/pipe-values.component';
+import {PrintableSequenceComponent} from './printable-sequence/printable-sequence.component';
 
 export const routes: Routes = [
   { path: 'parser', component: ParserComponent },
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'terminal-modifications', component: TerminalModificationsComponent},
   { path: 'chimeric-spectra', component: ChimericSpectraComponent},
   { path: 'pipe-values', component: PipeValuesComponent},
+  { path: 'printable', component: PrintableSequenceComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 ];

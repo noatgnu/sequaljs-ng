@@ -1,0 +1,92 @@
+.printable-view {
+  padding: 20px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.print-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  @media print {
+    display: none;
+  }
+}
+
+.print-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.loading, .error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 20px;
+}
+
+.error-message {
+  color: #f44336;
+}
+
+.printable-sequence-container {
+  width: fit-content;
+  overflow: visible;
+  border: none !important;
+  box-shadow: none !important;
+
+  ::ng-deep .sequence-display {
+    display: block;
+    white-space: nowrap;
+    width: fit-content;
+    max-width: none;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .sequence-container {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: fit-content;
+    min-width: min-content;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .sequence-scroller {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: fit-content;
+    overflow: visible;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Keep terminal elements and amino acids inline */
+  ::ng-deep .n-terminal-box,
+  ::ng-deep .c-terminal-box,
+  ::ng-deep .amino-acid-box {
+    display: inline-flex;
+    flex-shrink: 0;
+    border: none !important;
+  }
+
+  ::ng-deep .sequence-container > * {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+    border: none !important;
+  }
+}
+
+@media print {
+  .printable-sequence-container {
+    width: max-content !important;
+    max-width: none !important;
+  }
+}

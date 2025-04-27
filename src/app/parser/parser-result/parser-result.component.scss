@@ -1,0 +1,40 @@
+.sequence-visualization-container.print-mode {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: none;
+}
+
+.sequence-display.print-mode {
+  .sequence-container {
+    max-width: none;
+    overflow: visible;
+  }
+
+  .sequence-scroller {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
+    justify-content: flex-start;
+  }
+
+  .amino-acid-box {
+    break-inside: avoid;
+  }
+}
+
+@media print {
+  .export-controls {
+    display: none !important;
+  }
+
+  .sequence-container {
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  .sequence-scroller {
+    overflow: visible !important;
+    flex-wrap: wrap !important;
+  }
+}

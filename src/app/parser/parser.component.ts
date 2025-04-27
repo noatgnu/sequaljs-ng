@@ -21,6 +21,9 @@ import {NgClass} from '@angular/common';
 import {MatSelectModule} from '@angular/material/select';
 import {Modification} from 'sequaljs/dist/modification';
 import {ParserResultComponent} from './parser-result/parser-result.component';
+import html2canvas from 'html2canvas';
+import {saveAs} from 'file-saver';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 
 @Component({
   selector: 'app-parser',
@@ -48,6 +51,10 @@ import {ParserResultComponent} from './parser-result/parser-result.component';
     MatExpansionPanel,
     MatExpansionPanelHeader,
     MatExpansionPanelTitle,
+    MatMenu,
+    MatMenuTrigger,
+    MatButton,
+    MatMenuItem
   ],
   templateUrl: './parser.component.html',
   styleUrl: './parser.component.scss'
@@ -164,4 +171,35 @@ export class ParserComponent implements OnInit {
       });
     }
   }
+
+  exportAsPNG() {
+    if (!this.parsedSequence) return;
+    const sequenceContainers = document.querySelectorAll('.sequence-visualization-container')
+    if (sequenceContainers.length === 0) return;
+
+    this.isProcessing = true;
+    for (const sequenceContainer of sequenceContainers) {
+      const container = sequenceContainer as HTMLElement;
+      html2canvas(container, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+        logging: false,
+        allowTaint: true,
+        useCORS: true
+      }).then((canvas: any) => {
+        this.isProcessing = false;
+        canvas.toBlob((blob: any) => {
+          if (blob) {
+            saveAs(blob, `proforma-sequence-${Date.now()}.png`);
+          }
+        });
+      }).catch((error: any) => {
+        console.error('Error generating PNG:', error);
+        this.isProcessing = false;
+      });
+    }
+  }
+
+
+
 }

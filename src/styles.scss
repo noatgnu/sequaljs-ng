@@ -731,3 +731,39 @@ body.dark-mode {
 .legend-label {
   font-weight: 500;
 }
+
+.sequence-visualization-container {
+  position: relative;
+}
+
+.export-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 5;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+app-printable-sequence {
+  mat-toolbar, app-toolbar {
+    display: none !important;
+  }
+
+  .mat-toolbar {
+    display: none !important;
+  }
+
+  body {
+    padding-top: 0 !important;
+  }
+}
+
+@media print {
+  mat-toolbar, app-toolbar, .mat-toolbar {
+    display: none !important;
+  }
+}
