@@ -4,6 +4,34 @@
       <div #sequenceContainer [class.print-mode]="printMode"  class="sequence-display">
         <div class="sequence-container">
           <div class="sequence-scroller">
+            @if (sequence.peptidoformName || sequence.peptidoformIonName || sequence.compoundIonName) {
+              <div class="terminal-section named-entities-section" matTooltip="ProForma 2.1 Named Entities">
+                <div class="terminal-box named-entities-box">
+                  <div class="terminal-header">Named Entities (ProForma 2.1)</div>
+                  <div class="terminal-content">
+                    @if (sequence.compoundIonName) {
+                      <div class="named-entity">
+                        <span class="entity-label">Compound Ion (>>>):</span>
+                        <span class="entity-value">{{sequence.compoundIonName}}</span>
+                      </div>
+                    }
+                    @if (sequence.peptidoformIonName) {
+                      <div class="named-entity">
+                        <span class="entity-label">Peptidoform Ion (>>):</span>
+                        <span class="entity-value">{{sequence.peptidoformIonName}}</span>
+                      </div>
+                    }
+                    @if (sequence.peptidoformName) {
+                      <div class="named-entity">
+                        <span class="entity-label">Peptidoform (>):</span>
+                        <span class="entity-value">{{sequence.peptidoformName}}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+                <div class="section-separator section-separator-right"></div>
+              </div>
+            }
             @if (sequence.globalMods.length > 0) {
               <div class="terminal-section global-section" matTooltip="Modifications applied to all residues to specific amino acids">
                 <div class="terminal-box global-box">
@@ -21,6 +49,23 @@
                           </div>
                         }
                         <app-display-mod [modification]="mod"></app-display-mod>
+                        @if (mod.getPositionConstraint() || mod.getLimitPerPosition() || mod.getColocalizeKnown() || mod.getColocalizeUnknown()) {
+                          <div class="placement-controls">
+                            <span class="controls-label">Controls:</span>
+                            @if (mod.getPositionConstraint()) {
+                              <span class="control-badge">Position: {{mod.getPositionConstraint()!.join(',')}}</span>
+                            }
+                            @if (mod.getLimitPerPosition()) {
+                              <span class="control-badge">Limit: {{mod.getLimitPerPosition()}}</span>
+                            }
+                            @if (mod.getColocalizeKnown()) {
+                              <span class="control-badge">CoMKP</span>
+                            }
+                            @if (mod.getColocalizeUnknown()) {
+                              <span class="control-badge">CoMUP</span>
+                            }
+                          </div>
+                        }
                       </div>
                     }
                   </div>
@@ -64,7 +109,10 @@
                   <div class="terminal-header">N-Terminal</div>
                   <div class="terminal-content">
                     @for (mod of sequence.mods.get(-1); track $index) {
-                      <div class="terminal-mod">
+                      <div class="terminal-mod" [class.ion-type-mod]="mod.isIonType">
+                        @if (mod.isIonType) {
+                          <span class="ion-type-badge" matTooltip="ProForma 2.1 Ion Notation">Ion Type</span>
+                        }
                         <app-display-mod [modification]="mod"></app-display-mod>
                       </div>
                     }
@@ -121,7 +169,10 @@
                   <div class="terminal-header">C-Terminal</div>
                   <div class="terminal-content">
                     @for (mod of sequence.mods.get(-2); track $index) {
-                      <div class="terminal-mod">
+                      <div class="terminal-mod" [class.ion-type-mod]="mod.isIonType">
+                        @if (mod.isIonType) {
+                          <span class="ion-type-badge" matTooltip="ProForma 2.1 Ion Notation">Ion Type</span>
+                        }
                         <app-display-mod [modification]="mod"></app-display-mod>
                       </div>
                     }

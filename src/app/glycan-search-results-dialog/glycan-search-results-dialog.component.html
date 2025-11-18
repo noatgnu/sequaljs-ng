@@ -1,0 +1,49 @@
+<h2 mat-dialog-title>Glycan Search Results</h2>
+<div mat-dialog-content>
+  <p class="search-info">
+    Found <strong>{{data.resultCount}}</strong> results for "<strong>{{data.searchTerm}}</strong>"
+  </p>
+  <p class="result-limit-info">Showing top {{data.results.length}} results</p>
+  <p class="glygen-reference">
+    <a [href]="getGlyGenUrl()" target="_blank" rel="noopener noreferrer" class="glygen-link">
+      View full results on GlyGen
+      <mat-icon class="external-link-icon">open_in_new</mat-icon>
+    </a>
+  </p>
+
+  <div class="results-grid">
+    @for (glycan of data.results; track glycan.glytoucan_ac) {
+      <div class="glycan-result-card" (click)="onSelectGlycan(glycan)">
+        <div class="glycan-image">
+          @if (glycan.image_url) {
+            <img [src]="glycan.image_url" [alt]="glycan.glytoucan_ac" />
+          } @else {
+            <div class="no-image">No image available</div>
+          }
+        </div>
+        <div class="glycan-info">
+          <div class="glycan-id">{{glycan.glytoucan_ac}}</div>
+          <div class="glycan-details">
+            <div class="detail-row">
+              <span class="detail-label">Mass:</span>
+              <span class="detail-value">{{glycan.mass | number:'1.2-2'}}</span>
+            </div>
+            @if (glycan.byonic) {
+              <div class="detail-row">
+                <span class="detail-label">Byonic:</span>
+                <span class="detail-value">{{glycan.byonic}}</span>
+              </div>
+            }
+            <div class="detail-row">
+              <span class="detail-label">Score:</span>
+              <span class="detail-value">{{glycan.hit_score | number:'1.2-2'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onClose()">Close</button>
+</div>

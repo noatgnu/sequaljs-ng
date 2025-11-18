@@ -126,12 +126,61 @@ export interface GlycanDetails {
   }>
 }
 
+export interface GlycanSearchSimpleResponse {
+  query: {
+    query_type: string;
+    term: string;
+    term_category: string;
+  };
+  list_id: string;
+  resultcount: number;
+}
+
+export interface GlycanListItem {
+  glytoucan_ac: string;
+  image_url: string;
+  hit_score: number;
+  mass: number;
+  byonic?: string;
+  publication?: string;
+  filter_code?: string;
+  score_info?: {
+    contributions: Array<{
+      c: string;
+      w: number;
+      f: number;
+    }>;
+    formula: string;
+    variables: {
+      c: string;
+      w: string;
+      f: string;
+    };
+  };
+}
+
+export interface GlycanListResponse {
+  results: GlycanListItem[];
+  pagination: {
+    total_length: number;
+    offset: number;
+    limit: number;
+    sort: string;
+    order: string;
+  };
+  cache_info?: any;
+  filters?: any;
+  query?: any;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class GlycanService {
   private baseUrl = 'https://api.glygen.org/glycan/detail/';
   private searchUrl = 'https://api.glygen.org/glycan/search/';
+  private searchSimpleUrl = 'https://api.glygen.org/glycan/search_simple/';
+  private listUrl = 'https://api.glygen.org/glycan/list';
 
   constructor(private http: HttpClient) { }
 
@@ -182,6 +231,56 @@ export class GlycanService {
       .pipe(
         map(response => response.results || []),
         catchError(() => of([]))
+      );
+  }
+
+  /**
+   * Simple search for glycans using GlyGen search_simple API
+   */
+  searchSimple(term: string, termCategory: string = 'any'): Observable<GlycanSearchSimpleResponse | null> {
+    if (!term) return of(null);
+
+    const body = {
+      query_type: 'glycan_search_simple',
+      term: term,
+      term_category: termCategory
+    };
+
+    return this.http.post<GlycanSearchSimpleResponse>(this.searchSimpleUrl, body)
+      .pipe(
+        catchError(error => {
+          console.error('Error in simple glycan search:', error);
+          return of(null);
+        })
+      );
+  }
+
+  /**
+   * Get glycan list using list_id from search_simple
+   */
+  getGlycanList(listId: string, offset: number = 1, limit: number = 20): Observable<GlycanListResponse | null> {
+    if (!listId) return of(null);
+
+    const query = {
+      id: listId,
+      offset: offset,
+      sort: 'hit_score',
+      limit: limit,
+      order: 'desc',
+      filters: [],
+      columns: ['glytoucan_ac', 'image_url', 'hit_score', 'mass', 'byonic', 'publication']
+    };
+
+    const params = {
+      query: JSON.stringify(query)
+    };
+
+    return this.http.get<GlycanListResponse>(this.listUrl, { params })
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching glycan list:', error);
+          return of(null);
+        })
       );
   }
 }

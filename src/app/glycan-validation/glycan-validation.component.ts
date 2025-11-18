@@ -59,6 +59,9 @@ export class GlycanValidationComponent {
     valid2: 'Fuc(1)HexNAc(2)Hex(8)',
     valid3: 'HexNAc(2)Hex(5)NeuAc(2)',
     valid4: 'Hex(1)',
+    custom1: '{C8H13N1O5}1Hex2',
+    custom2: '{C11H17N1O9}2Hex3HexNAc2',
+    customIsotope: '{C8H13[15N1]O5}2Hex1',
     invalid1: 'HexNAc(A)Hex(3)',
     invalid2: 'Hex%NeuAc(2)',
     invalid3: 'HexNAc(0)Hex(3)',
@@ -68,7 +71,10 @@ export class GlycanValidationComponent {
   sequenceExamples: {[key: string]: string} = {
     labile: '{Glycan:HexNAc(2)Hex(5)}PEPTIDEK',
     attached: 'PEPTN[GNO:G59626AS]IDEK',
-    custom: 'PEPTN[Glycan:HexNAc(1)Hex(3)]IDEK'
+    custom: 'PEPTN[Glycan:HexNAc(1)Hex(3)]IDEK',
+    customMono: 'N[Glycan:{C8H13N1O5}1Hex2]PEPTIDE',
+    customLabile: '{Glycan:{C8H13N1O5}1Hex2}PEPTIDE',
+    customIsotope: 'N[Glycan:{C8H13[15N1]O5}2Hex1]PEPTIDE'
   };
 
   private _customGlycan = '';
@@ -94,6 +100,24 @@ export class GlycanValidationComponent {
   sequenceResult = '';
 
   glycanCode: {[key: string]: string} = {
+    customMono: `// ProForma 2.1: Custom monosaccharides
+import { Sequence } from 'sequaljs/dist/sequence';
+
+// Custom monosaccharide notation using chemical formula in braces
+const seq = Sequence.fromProforma("N[Glycan:{C8H13N1O5}1Hex2]PEPTIDE");
+
+const mod = seq.seq[0].mods[0];
+console.log(\`Source: \${mod.modValue.source}\`); // "Glycan"
+console.log(\`Value: \${mod.modValue.primaryValue}\`); // "{C8H13N1O5}1Hex2"
+console.log(\`Is valid glycan: \${mod.modValue.pipeValues[0].isValidGlycan}\`); // true
+
+// Mixed custom and standard monosaccharides
+const seq2 = Sequence.fromProforma("N[Glycan:{C11H17N1O9}2Hex3HexNAc2]PEPTIDE");
+console.log(seq2.seq[0].mods[0].modValue.pipeValues[0].isValidGlycan); // true
+
+// Custom monosaccharides with isotopes
+const seq3 = Sequence.fromProforma("N[Glycan:{C8H13[15N1]O5}2Hex1]PEPTIDE");
+console.log(seq3.seq[0].mods[0].modValue.pipeValues[0].isValidGlycan); // true`,
     findAll: `// Find all glycans in a sequence
 function findAllGlycans(seq) {
   const glycans = [];

@@ -15,6 +15,10 @@
         <mat-button-toggle (click)="setExample('globalMod')">Basic Global Mod</mat-button-toggle>
         <mat-button-toggle (click)="setExample('multipleMods')">Multiple Global Mods</mat-button-toggle>
         <mat-button-toggle (click)="setExample('isotopeLabel')">Isotope Labeling</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('nTerminal')">N-terminal (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('cTerminal')">C-terminal (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('terminalSpecific')">Terminal-Specific (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('multipleTerminals')">Mixed Targets (2.1)</mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card-content>
   </mat-card>
@@ -111,6 +115,33 @@ const seq = Sequence.fromProforma('&lt;13C6&gt;PEPTIDERK');
 const isotopeMod = seq.globalMods[0];
 console.log(isotopeMod.modValue.primaryValue); // "13C6"
 console.log(isotopeMod.source); // "Formula"</code></pre>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="Terminal-Specific (ProForma 2.1)">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Terminal-Specific Global Modifications</h3>
+            <p>
+              ProForma 2.1 allows global modifications to target N-terminus or C-terminus, with optional amino acid constraints.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// N-terminal global modification
+const seq = Sequence.fromProforma('&lt;[TMT6plex]&#64;N-term&gt;PEPTIDEK');
+console.log(seq.globalMods[0].targetResidues); // [&#123;type: "terminal", terminal: "N-term"&#125;]
+
+// C-terminal global modification
+const seq2 = Sequence.fromProforma('&lt;[Amidated]&#64;C-term&gt;PEPTIDEK');
+console.log(seq2.globalMods[0].targetResidues); // [&#123;type: "terminal", terminal: "C-term"&#125;]
+
+// Terminal-specific with amino acid constraint
+const seq3 = Sequence.fromProforma('&lt;[Gln-&gt;pyro-Glu]&#64;N-term:Q&gt;QPEPTIDE');
+console.log(seq3.globalMods[0].targetResidues);
+// [&#123;type: "terminal_specific", terminal: "N-term", aminoAcid: "Q"&#125;]
+
+// Multiple targets including terminals
+const seq4 = Sequence.fromProforma('&lt;[TMT6plex]&#64;K,N-term&gt;PEPTIDEK');
+console.log(seq4.globalMods[0].targetResidues);
+// ["K", &#123;type: "terminal", terminal: "N-term"&#125;]</code></pre>
             </mat-card>
           </div>
         </mat-tab>

@@ -11,6 +11,9 @@ import {TerminalModificationsComponent} from './terminal-modifications/terminal-
 import {ChimericSpectraComponent} from './chimeric-spectra/chimeric-spectra.component';
 import {PipeValuesComponent} from './pipe-values/pipe-values.component';
 import {PrintableSequenceComponent} from './printable-sequence/printable-sequence.component';
+import {IonNotationComponent} from './ion-notation/ion-notation.component';
+import {PlacementControlsComponent} from './placement-controls/placement-controls.component';
+import {NamedEntitiesComponent} from './named-entities/named-entities.component';
 
 export const routes: Routes = [
   { path: 'parser', component: ParserComponent },
@@ -25,6 +28,9 @@ export const routes: Routes = [
   { path: 'chimeric-spectra', component: ChimericSpectraComponent},
   { path: 'pipe-values', component: PipeValuesComponent},
   { path: 'printable', component: PrintableSequenceComponent},
+  { path: 'ion-notation', component: IonNotationComponent},
+  { path: 'placement-controls', component: PlacementControlsComponent},
+  { path: 'named-entities', component: NamedEntitiesComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 
 ];

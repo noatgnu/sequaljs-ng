@@ -27,9 +27,7 @@
       pipeValue.value.replace("#", "") !== modification.crosslinkId &&
       !pipeValue.value.startsWith("#")) {
 
-        <!-- With source prefix (database identifier) -->
-        @if (pipeValue.source) {
-          <!-- Glycan handling -->
+      @if (pipeValue.source) {
         @if (["GNO", "G", "GLYCAN"].includes(pipeValue.source.toUpperCase())) {
           <div class="pipe-value pipe-type-glycan"
                [class.clickable]="checkIfValueInGlycan(pipeValue.value)&&['GNO', 'G'].includes(pipeValue.source.toUpperCase())"
@@ -46,67 +44,60 @@
             <app-show-glycan [glycanId]="pipeValue.value" class="small-glycan"></app-show-glycan>
           }
         }
-
-          <!-- Crosslinker handling -->
           @else if (["XLMOD", "XL", "X", "XL-MOD"].includes(pipeValue.source.toUpperCase()) || pipeValue.isCrosslinkRef) {
             <div class="pipe-value pipe-type-crosslink"
                  [class.clickable]="checkIfValueInXLMod(pipeValue.value)"
                  (click)="showXLModDetails(pipeValue.value)">
               <div class="pipe-indicator"></div>
-              {{pipeValue.source}}:{{pipeValue.value}}
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
               <mat-icon class="info-icon">info</mat-icon>
             </div>
           }
 
-          <!-- Unimod handling -->
           @else if (["UNIMOD", "U"].includes(pipeValue.source.toUpperCase())) {
             <div class="pipe-value pipe-type-unimod"
                  [class.clickable]="checkIfValueInUnimod(pipeValue.value)"
                  (click)="showUnimodDetails(pipeValue.value)">
               <div class="pipe-indicator"></div>
-              {{pipeValue.source}}:{{pipeValue.value}}
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
               <mat-icon class="info-icon">info</mat-icon>
             </div>
           }
 
-          <!-- PSI-MOD handling -->
           @else if (["MOD", "M"].includes(pipeValue.source.toUpperCase())) {
             <div class="pipe-value pipe-type-psimod"
                  [class.clickable]="checkIfValueInPSIMod(pipeValue.value)"
                  (click)="showPSIModDetails(pipeValue.value)">
               <div class="pipe-indicator"></div>
-              {{pipeValue.source}}:{{pipeValue.value}}
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
               <mat-icon class="info-icon">info</mat-icon>
             </div>
           }
 
-          <!-- RESID handling -->
           @else if (["RESID", "R"].includes(pipeValue.source.toUpperCase())) {
             <div class="pipe-value pipe-type-resid"
                  [class.clickable]="checkIfValueInRESID(pipeValue.value)"
                  (click)="showRESIDDetails(pipeValue.value)">
               <div class="pipe-indicator"></div>
-              {{pipeValue.source}}:{{pipeValue.value}}
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
               <mat-icon class="info-icon">info</mat-icon>
             </div>
           }
 
-          <!-- Other types -->
           @else {
             <div class="pipe-value pipe-type-{{pipeValue.type.toLowerCase()}}">
               <div class="pipe-indicator"></div>
-              {{pipeValue.source}}:{{pipeValue.value}}
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
             </div>
           }
         }
 
-        <!-- Without source prefix (potential synonym) -->
         @else {
           <div class="pipe-value pipe-type-{{pipeValue.type.toLowerCase()}}"
                [class.clickable]="checkIfValueInSynonym(pipeValue.value)"
                (click)="showSynonymDetails(pipeValue.value)">
             <div class="pipe-indicator"></div>
-            {{pipeValue.value}}
+            {{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
             <mat-icon class="info-icon">info</mat-icon>
           </div>
         }

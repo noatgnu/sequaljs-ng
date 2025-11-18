@@ -229,7 +229,7 @@ body.dark-mode {
 }
 .pipe-type-mass {
   background-color: rgba(255, 193, 7, 0.05);
-  border-left: 2px solid #9C27B0;
+  border-left: 2px solid #FFC107;
 }
 .pipe-type-observed_mass {
   background-color: rgba(186, 104, 200, 0.05);
@@ -237,7 +237,7 @@ body.dark-mode {
 }
 .pipe-type-crosslink {
   background-color: rgba(139, 195, 74, 0.05);
-  border-left: 2px solid #FF9800;
+  border-left: 2px solid #795548;
 }
 .pipe-type-branch {
   background-color: rgba(255, 152, 0, 0.05);
@@ -270,6 +270,10 @@ body.dark-mode {
 .pipe-type-resid {
   background-color: rgba(33, 150, 243, 0.05);
   border-left: 2px solid #3F51B9;
+}
+.pipe-type-ion {
+  background-color: rgba(156, 39, 176, 0.05);
+  border-left: 2px solid #9C27B0;
 }
 
 .legend-container {
@@ -765,5 +769,11 @@ app-printable-sequence {
 @media print {
   mat-toolbar, app-toolbar, .mat-toolbar {
     display: none !important;
+  }
+}
+
+.glycan-search-dialog {
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: var(--mat-app-background-color);
   }
 }

@@ -17,6 +17,8 @@ import {RESIDDetailsDialogComponent, ResidDialogData} from '../resid-details-dia
 import {GlycanService} from '../glycan.service';
 import {GlycanDetailsDialogComponent} from '../glycan-details-dialog/glycan-details-dialog.component';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {GlycanSearchResultsDialogComponent} from '../glycan-search-results-dialog/glycan-search-results-dialog.component';
+import {switchMap} from 'rxjs';
 
 @Component({
   selector: 'app-display-mod',
@@ -208,17 +210,68 @@ export class DisplayModComponent {
             width: '600px'
           });
         } else {
-          console.warn(`No glycan found with ID: ${gnoId}`);
-          this.toast.open(`Glycan ID "${gnoId}" not found`, 'OK', {
-            duration: 2000,
-            panelClass: 'error-snackbar'
-          });
+          console.warn(`No glycan found with ID: ${gnoId}, attempting search...`);
+          this.performGlycanSearch(gnoId);
         }
       },
       error: (error) => {
         this.glycanLoading = false;
         console.error(`Error fetching glycan details:`, error);
-        this.toast.open(`Error loading glycan details`, 'OK', {
+        this.performGlycanSearch(gnoId);
+      }
+    });
+  }
+
+  private performGlycanSearch(searchTerm: string): void {
+    this.glycanLoading = true;
+
+    this.glycanService.searchSimple(searchTerm, 'any').pipe(
+      switchMap(searchResult => {
+        if (searchResult && searchResult.list_id) {
+          return this.glycanService.getGlycanList(searchResult.list_id, 1, 20).pipe(
+            switchMap(listResult => {
+              if (listResult && listResult.results && listResult.results.length > 0) {
+                this.glycanLoading = false;
+                const dialogRef = this.dialog.open(GlycanSearchResultsDialogComponent, {
+                  data: {
+                    results: listResult.results,
+                    searchTerm: searchTerm,
+                    resultCount: searchResult.resultcount,
+                    listId: searchResult.list_id
+                  },
+                  width: '900px',
+                  maxHeight: '80vh',
+                  panelClass: 'glycan-search-dialog'
+                });
+
+                return dialogRef.afterClosed();
+              } else {
+                this.glycanLoading = false;
+                this.toast.open(`No glycans found matching "${searchTerm}"`, 'OK', {
+                  duration: 3000
+                });
+                return [];
+              }
+            })
+          );
+        } else {
+          this.glycanLoading = false;
+          this.toast.open(`No glycans found matching "${searchTerm}"`, 'OK', {
+            duration: 3000
+          });
+          return [];
+        }
+      })
+    ).subscribe({
+      next: (selectedGlycan) => {
+        if (selectedGlycan && selectedGlycan.glytoucan_ac) {
+          this.showGlycanDetails(selectedGlycan.glytoucan_ac);
+        }
+      },
+      error: (error) => {
+        this.glycanLoading = false;
+        console.error('Error searching for glycan:', error);
+        this.toast.open(`Error searching for glycan`, 'OK', {
           duration: 2000,
           panelClass: 'error-snackbar'
         });

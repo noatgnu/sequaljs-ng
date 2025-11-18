@@ -38,3 +38,71 @@
     flex-wrap: wrap !important;
   }
 }
+
+.named-entities-section {
+  .named-entities-box {
+    background-color: #e3f2fd;
+    border: 2px solid #2196f3;
+  }
+
+  .named-entity {
+    display: flex;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 0.9rem;
+
+    .entity-label {
+      font-weight: 600;
+      color: #1976d2;
+      min-width: 160px;
+    }
+
+    .entity-value {
+      color: #333;
+      font-family: 'Courier New', monospace;
+    }
+  }
+}
+
+.placement-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 6px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+
+  .controls-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #666;
+    margin-right: 4px;
+  }
+
+  .control-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #ff9800;
+    color: white;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 500;
+  }
+}
+
+.ion-type-mod {
+  border-left: 3px solid #9c27b0;
+  padding-left: 8px;
+}
+
+.ion-type-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #9c27b0;
+  color: white;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-right: 8px;
+}

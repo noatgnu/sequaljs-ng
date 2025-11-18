@@ -27,7 +27,11 @@ export class GlobalModificationsComponent implements OnInit {
   examples: {[key: string]: string} = {
     globalMod: '<[Carbamidomethyl]@C>PEPTCDE',
     multipleMods: '<[Carbamidomethyl]@C><[Oxidation]@M>PEPTCMEK',
-    isotopeLabel: '<13C6>PEPTIDERK'
+    isotopeLabel: '<13C6>PEPTIDERK',
+    nTerminal: '<[TMT6plex]@N-term>PEPTIDEK',
+    cTerminal: '<[Amidated]@C-term>PEPTIDEK',
+    terminalSpecific: '<[Gln->pyro-Glu]@N-term:Q>QPEPTIDE',
+    multipleTerminals: '<[TMT6plex]@K,N-term>PEPTIDEK'
   };
 
   currentExample: string = this.examples['globalMod'];

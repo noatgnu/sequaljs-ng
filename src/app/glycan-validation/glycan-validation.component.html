@@ -36,6 +36,9 @@
         <mat-button-toggle (click)="setGlycanExample('valid2')">High Mannose</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('valid3')">Sialylated</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('valid4')">Simple</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('custom1')">Custom Mono (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('custom2')">Mixed Custom (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('invalid1')">Invalid Type</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('invalid2')">Invalid Format</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('invalid3')">Zero Count</mat-button-toggle>
@@ -78,6 +81,12 @@
           </mat-card>
         </mat-tab>
 
+        <mat-tab label="Custom Monosaccharides (ProForma 2.1)">
+          <mat-card class="code-card">
+            <pre><code>{{glycanCode['customMono']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
         <mat-tab label="Monosaccharide Parsing">
           <mat-card class="code-card">
             <pre><code>{{glycanCode['monoParsing']}}</code></pre>
@@ -98,6 +107,9 @@
         <mat-button-toggle (click)="setSequenceExample('labile')">Labile Glycan</mat-button-toggle>
         <mat-button-toggle (click)="setSequenceExample('attached')">GNO Glycan</mat-button-toggle>
         <mat-button-toggle (click)="setSequenceExample('custom')">Site-specific</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('customMono')">Custom Mono (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('customLabile')">Custom Labile (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
       </mat-button-toggle-group>
 
       <div class="custom-input-section">

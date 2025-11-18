@@ -72,7 +72,6 @@ export class ParserResultComponent {
     const container = this.sequenceContainer.nativeElement;
     this.isExporting = true;
 
-    // Create an off-screen container with proper styling
     const offScreenContainer = document.createElement('div');
     offScreenContainer.style.position = 'absolute';
     offScreenContainer.style.left = '-9999px';
@@ -82,12 +81,10 @@ export class ParserResultComponent {
     offScreenContainer.style.overflow = 'visible';
     offScreenContainer.style.backgroundColor = '#ffffff';
 
-    // Clone the sequence container content
     const clone = container.cloneNode(true);
     offScreenContainer.appendChild(clone);
     document.body.appendChild(offScreenContainer);
 
-    // Get the exact dimensions of the cloned content
     const fullWidth = clone.scrollWidth;
     const fullHeight = clone.scrollHeight;
 
@@ -95,7 +92,7 @@ export class ParserResultComponent {
     html2canvas(clone, {
       backgroundColor: '#ffffff',
       scale: 2,
-      logging: true, // Temporarily enable for debugging
+      logging: true,
       allowTaint: true,
       useCORS: true,
       width: fullWidth,
@@ -103,12 +100,10 @@ export class ParserResultComponent {
       imageTimeout: 0,
       foreignObjectRendering: true
     }).then(canvas => {
-      // Save the image
       canvas.toBlob(blob => {
         if (blob) {
           saveAs(blob, `proforma-sequence-${Date.now()}.png`);
         }
-        // Clean up
         document.body.removeChild(offScreenContainer);
         this.isExporting = false;
       });

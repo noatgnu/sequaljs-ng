@@ -76,7 +76,13 @@ export class ParserComponent implements OnInit {
     "PRT(EC[Carbamidomethyl]FRMS)[+19.0523]ISK",
     "EM[Oxidation]EVT[#g1(0.01)]S[#g1(0.09)]ES[Phospho#g1(0.90)]PEK",
     "NEEYN[GNO:G59626AS]K",
-    "EMEVEESPEK/2[+2Na+,+H+]"
+    "EMEVEESPEK/2[+2Na+,+H+]",
+    "PEPT[Formula:C2H3NO:z-1]IDE[Formula:Zn1:z+2]K",
+    "PEPTIDE-[b-type-ion]",
+    "<[TMT6plex|Position:M,C|Limit:1]@K,N-term>MTPEILTCNSIGCLKG",
+    "(>TMT-labeled peptide)<[TMT6plex]@K,N-term>PEPTIDEK/2",
+    "N[Glycan:{C8H13N1O5}1Hex2]PEPTIDE",
+    "<[Gln->pyro-Glu]@N-term:Q>QPEPTIDE"
   ]
   selectedExample: string = "";
   sequence: string = 'ELVIS[Unimod:21|Phospho|INFO:Validated]K';
@@ -84,7 +90,8 @@ export class ParserComponent implements OnInit {
   pipeValueTypes = [
     'synonym', 'info_tag', 'mass', 'observed_mass',
     'crosslink', 'branch', 'ambiguity',
-    'glycan', 'gap', 'formula'
+    'glycan', 'gap', 'formula', 'unimod',
+    'ion'
   ];
   globalFixedModsMap: {[residue: string]: Modification[]} = {}
   form;
@@ -153,7 +160,13 @@ export class ParserComponent implements OnInit {
   }
 
   formatLegendLabel(type: string): string {
-    return type.replace('_', ' ');
+    const labels: {[key: string]: string} = {
+      'info_tag': 'Info Tag',
+      'observed_mass': 'Observed Mass',
+      'unimod': 'UniMod / PSI-MOD / RESID',
+      'ion': 'Ion Type (2.1)'
+    };
+    return labels[type] || type.replace('_', ' ');
   }
 
   selectExample(example: string) {

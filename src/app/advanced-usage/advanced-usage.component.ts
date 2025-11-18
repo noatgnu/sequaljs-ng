@@ -26,6 +26,7 @@ export class AdvancedUsageComponent {
     terminalMods: '[Acetyl]-PEPTIDE-[Amidated]',
     globalMods: '<[Carbamidomethyl]@C>PEPTCDE',
     jointRepresentation: 'ELVIS[U:Phospho|+79.966331]K',
+    chargedFormula: 'PEPT[Formula:C2H3NO:z-1]IDE[Formula:Zn1:z+2]K',
     crosslinks: 'PEPTK[XL:DSS#XL1|+138.068|INFO:reaction=NHS]IDE',
     complex: 'PEP[U:Deamidation|+0.984]T[U:Phospho#1(0.75)|+79.966]K[XL:DSS#XL2]IDE',
     gapNotation: 'RTAAX[+367.0537]WT',
@@ -94,6 +95,19 @@ console.log(seq.toStrippedString()); // "RTAAXWT"
 console.log(seq.seq[4].value); // "X"
 console.log(seq.seq[4].mods[0].modType); // "gap"
 console.log(seq.seq[4].mods[0].mass); // 367.0537`,
+
+    chargedFormula: `// ProForma 2.1: Charged formula notation
+const seq = Sequence.fromProforma('PEPT[Formula:C2H3NO:z-1]IDE[Formula:Zn1:z+2]K');
+
+const mod1 = seq.seq[3].mods[0];
+console.log(mod1.modValue.source); // "Formula"
+console.log(mod1.modValue.primaryValue); // "C2H3NO"
+console.log(mod1.modValue.chargeValue); // -1
+
+const mod2 = seq.seq[6].mods[0];
+console.log(mod2.modValue.source); // "Formula"
+console.log(mod2.modValue.primaryValue); // "Zn1"
+console.log(mod2.modValue.chargeValue); // 2`,
 
     ambiguity: `// Ambiguity groups with localization scores
 const seq = Sequence.fromProforma('EM[Oxidation]EVT[#g1(0.01)]S[#g1(0.09)]ES[Phospho#g1(0.90)]PEK');

@@ -1,59 +1,108 @@
 # SequalJS-ng
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.8.
+Interactive Angular demonstration site for [SequalJS](https://github.com/noatgnu/sequaljs), a TypeScript library for parsing and manipulating ProForma peptide/protein sequence notation.
 
-## Development server
+## About
 
-To start a local development server, run:
+This Angular application provides an interactive interface for exploring and demonstrating the capabilities of the SequalJS library, including:
+
+- **Live ProForma Parser**: Real-time parsing and visualization of protein/peptide sequences with modifications
+- **ProForma 2.0 & 2.1 Support**: Full compliance with both ProForma 2.0 and ProForma 2.1 specifications
+- **Interactive Examples**: Pre-loaded example sequences showcasing various ProForma features
+- **Modification Visualization**: Visual representation of modifications, cross-links, branches, and ambiguities
+- **Ontology Integration**: Interactive display of UniMod, PSI-MOD, GNO, XLMOD, and RESID entries
+- **Glycan Visualization**: Graphical representations of glycans using GlyGen database
+
+## Features
+
+### ProForma 2.0 Compliance
+- Base-ProForma features (amino acid sequences, modifications, terminal modifications)
+- Level 2-ProForma extensions (unusual amino acids, ambiguities, joint representation)
+- Top-Down extensions (RESID ontology, chemical formulas)
+- Cross-Linking extensions (XL-MOD ontology)
+- Glycan extensions (GNO ontology, glycan composition)
+- Spectral support (charge states, chimeric spectra, global modifications)
+
+### ProForma 2.1 Extensions
+- Charged formulas (Section 11.1)
+- Ion notation for fragment ions (Section 11.6)
+- Placement controls: Position, Limit, CoMKP, CoMUP (Section 11.2)
+- Named entities: peptidoform, peptidoform ion, compound ion (Section 8.2)
+- Custom monosaccharides in glycan notation (Section 10.2)
+- Terminal-specific global modifications (Section 11.3.2)
+
+## Architecture
+
+- **Angular**: 20.3.x
+- **Angular Material**: 20.2.x
+- **SequalJS**: 1.1.0
+- **TypeScript**: 5.9.x
+
+## Development
+
+### Prerequisites
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development Server
+
+To start a local development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Navigate to `http://localhost:4200/`. The application will automatically reload when you modify source files.
 
-## Code scaffolding
+### Building
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+To build the project for production:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Running Tests
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Project Structure
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```
+src/
+├── app/
+│   ├── home/                    # Landing page
+│   ├── parser/                  # Main parser component
+│   │   └── parser-result/       # Parsed sequence visualization
+│   ├── display-mod/             # Modification display component
+│   └── ...
+├── assets/                      # Static assets
+└── ...
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Contributing
 
-## Additional Resources
+This is a demonstration application for the SequalJS library. For contributions to the core parsing functionality, please visit the [SequalJS repository](https://github.com/noatgnu/sequaljs).
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Resources
+
+- [SequalJS Library](https://github.com/noatgnu/sequaljs)
+- [ProForma Specification](https://github.com/HUPO-PSI/ProForma)
+- [Angular Documentation](https://angular.dev)
+
+## License
+
+MIT
