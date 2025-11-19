@@ -36,10 +36,11 @@ export class IonNotationComponent implements OnInit {
   examples: {[key: string]: string} = {
     bIon: 'PEPTIDE-[b-type-ion]',
     yIon: 'PEPTIDE-[y-type-ion]',
-    aIon: '[a-type-ion]-PEPTIDE',
+    aIon: 'PEPTIDE-[a-type-ion]',
     cIon: 'PEPTIDE-[c-type-ion]',
-    multiple: '[a-type-ion]-PEPTIDE-[y-type-ion]',
-    withMods: '[a-type-ion]-PEPS[Phospho]TIDE-[b-type-ion]'
+    zIon: 'PEPTIDE-[z-type-ion]',
+    withMods: 'PEPS[Phospho]TIDE-[b-type-ion]',
+    withCharge: 'PEPTIDE-[y-type-ion]/2'
   };
 
   currentExample: string = this.examples['bIon'];
@@ -58,6 +59,7 @@ export class IonNotationComponent implements OnInit {
   ionCode: {[key: string]: string} = {
     parsing: `import { Sequence } from 'sequaljs/dist/sequence';
 
+// Ion type notation is C-terminal only
 const seq = Sequence.fromProforma("PEPTIDE-[b-type-ion]");
 
 const cTermMods = seq.mods.get(-2);
@@ -68,48 +70,53 @@ if (cTermMods) {
   });
 }
 
-console.log(seq.toProforma());`,
+console.log(seq.toProforma()); // "PEPTIDE-[b-type-ion]"`,
     adding: `import { Sequence } from 'sequaljs/dist/sequence';
 import { Modification } from 'sequaljs/dist/modification';
 import { ModificationValue } from 'sequaljs/dist/modification';
 
 const seq = new Sequence("PEPTIDE");
 
+// Create ion type modification (C-terminal only)
 const ionMod = new Modification();
 ionMod.modValue = new ModificationValue("b-type-ion");
 ionMod.isIonType = true;
 
+// Add to C-terminal position (-2)
 if (!seq.mods.has(-2)) {
   seq.mods.set(-2, []);
 }
 seq.mods.get(-2)!.push(ionMod);
 
-console.log(seq.toProforma());`,
-    nTerminal: `import { Sequence } from 'sequaljs/dist/sequence';
+console.log(seq.toProforma()); // "PEPTIDE-[b-type-ion]"`,
+    withMods: `import { Sequence } from 'sequaljs/dist/sequence';
 
-const seq = Sequence.fromProforma("[a-type-ion]-PEPTIDE");
+// Ion notation with other modifications
+const seq = Sequence.fromProforma("PEPS[Phospho]TIDE-[b-type-ion]");
 
-const nTermMods = seq.mods.get(-1);
-if (nTermMods) {
-  nTermMods.forEach(mod => {
+const cTermMods = seq.mods.get(-2);
+if (cTermMods) {
+  cTermMods.forEach(mod => {
     if (mod.isIonType) {
-      console.log(\`N-terminal ion: \${mod.modValue.primaryValue}\`);
+      console.log(\`Ion type: \${mod.modValue.primaryValue}\`);
     }
   });
-}`,
-    both: `import { Sequence } from 'sequaljs/dist/sequence';
-
-const seq = Sequence.fromProforma("[a-type-ion]-PEPTIDE-[y-type-ion]");
-
-const nTermMods = seq.mods.get(-1);
-const cTermMods = seq.mods.get(-2);
-
-if (nTermMods) {
-  console.log(\`N-terminal: \${nTermMods[0].modValue.primaryValue}\`);
 }
+
+console.log(seq.toProforma());`,
+    withCharge: `import { Sequence } from 'sequaljs/dist/sequence';
+
+// Ion notation with charge state
+const seq = Sequence.fromProforma("PEPTIDE-[y-type-ion]/2");
+
+console.log('Charge:', seq.charge); // 2
+
+const cTermMods = seq.mods.get(-2);
 if (cTermMods) {
-  console.log(\`C-terminal: \${cTermMods[0].modValue.primaryValue}\`);
-}`
+  console.log('Ion type:', cTermMods[0].modValue.primaryValue);
+}
+
+console.log(seq.toProforma()); // "PEPTIDE-[y-type-ion]/2"`
   };
 
   constructor() { }
@@ -129,38 +136,33 @@ if (cTermMods) {
 
       const ionInfo: any = {
         sequence: this.parsedSequence.toStrippedString(),
-        nTerminalIons: [],
-        cTerminalIons: []
+        ionTypes: []
       };
 
-      const nTermMods = this.parsedSequence.mods.get(-1);
-      if (nTermMods) {
-        nTermMods.forEach((mod: any) => {
-          if (mod.isIonType) {
-            ionInfo.nTerminalIons.push({
-              ionType: mod.modValue.primaryValue,
-              isIonType: mod.isIonType
-            });
-          }
-        });
-      }
-
+      // Ion type notation is C-terminal only
       const cTermMods = this.parsedSequence.mods.get(-2);
       if (cTermMods) {
         cTermMods.forEach((mod: any) => {
           if (mod.isIonType) {
-            ionInfo.cTerminalIons.push({
+            ionInfo.ionTypes.push({
               ionType: mod.modValue.primaryValue,
+              position: 'C-terminal',
               isIonType: mod.isIonType
             });
           }
         });
       }
 
-      this.output = JSON.stringify({
+      const result: any = {
         ionNotation: ionInfo,
         proforma: this.parsedSequence.toProforma()
-      }, null, 2);
+      };
+
+      if (this.parsedSequence.charge) {
+        result.charge = this.parsedSequence.charge;
+      }
+
+      this.output = JSON.stringify(result, null, 2);
     } catch (error) {
       this.output = `Error parsing sequence: ${error}`;
     }

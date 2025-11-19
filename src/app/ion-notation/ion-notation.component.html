@@ -3,7 +3,8 @@
 
   <p class="mat-body-1">
     ProForma 2.1 introduces ion notation for fragment ions, allowing you to specify the type of fragment ion represented by a sequence.
-    This is particularly useful in mass spectrometry for indicating b-type, y-type, a-type, c-type, and other fragment ions.
+    <strong>Ion type annotations are C-terminal modifications only</strong>, appearing at the end of the sequence.
+    This is particularly useful in mass spectrometry for indicating b-type, y-type, a-type, c-type, z-type, and other fragment ions.
   </p>
 
   <mat-card appearance="outlined" class="mb-4">
@@ -16,8 +17,9 @@
         <mat-button-toggle (click)="setExample('yIon')">y-type ion</mat-button-toggle>
         <mat-button-toggle (click)="setExample('aIon')">a-type ion</mat-button-toggle>
         <mat-button-toggle (click)="setExample('cIon')">c-type ion</mat-button-toggle>
-        <mat-button-toggle (click)="setExample('multiple')">Multiple ions</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('zIon')">z-type ion</mat-button-toggle>
         <mat-button-toggle (click)="setExample('withMods')">With Modifications</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('withCharge')">With Charge State</mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card-content>
   </mat-card>
@@ -28,11 +30,11 @@
     </mat-card-header>
     <mat-card-content>
       <mat-card class="code-card">
-        <pre><code>{{currentExample}}</code></pre>
+        <pre><code>{{ currentExample }}</code></pre>
       </mat-card>
       <p class="mat-body-2 mt-3">
-        Ion notation uses terminal modification syntax with specific ion type names:
-        <code>[ion-type-name]</code> at N-terminal or C-terminal positions.
+        Ion notation uses C-terminal modification syntax with specific ion type names:
+        <code>SEQUENCE-[ion-type-name]</code>. Ion types are <strong>always placed at the C-terminal</strong> (end of sequence).
       </p>
       <mat-form-field appearance="outline" style="width:100%; margin-top: 16px;">
         <mat-label>Try your own sequence</mat-label>
@@ -51,28 +53,28 @@
           <mat-tab label="Parsing">
             <div class="tab-content">
               <mat-card class="code-card">
-                <pre><code>{{ionCode['parsing']}}</code></pre>
+                <pre><code>{{ ionCode['parsing'] }}</code></pre>
               </mat-card>
             </div>
           </mat-tab>
           <mat-tab label="Adding Ion Notation">
             <div class="tab-content">
               <mat-card class="code-card">
-                <pre><code>{{ionCode['adding']}}</code></pre>
+                <pre><code>{{ ionCode['adding'] }}</code></pre>
               </mat-card>
             </div>
           </mat-tab>
-          <mat-tab label="N-terminal">
+          <mat-tab label="With Modifications">
             <div class="tab-content">
               <mat-card class="code-card">
-                <pre><code>{{ionCode['nTerminal']}}</code></pre>
+                <pre><code>{{ ionCode['withMods'] }}</code></pre>
               </mat-card>
             </div>
           </mat-tab>
-          <mat-tab label="Both Terminals">
+          <mat-tab label="With Charge State">
             <div class="tab-content">
               <mat-card class="code-card">
-                <pre><code>{{ionCode['both']}}</code></pre>
+                <pre><code>{{ ionCode['withCharge'] }}</code></pre>
               </mat-card>
             </div>
           </mat-tab>
@@ -142,12 +144,12 @@
     </mat-card-header>
     <mat-card-content>
       <mat-tab-group animationDuration="0ms">
-        <mat-tab label="C-Terminal">
+        <mat-tab label="Fragment Ion Basics">
           <div class="tab-content">
-            <h3 class="mat-subtitle-1">C-Terminal Ion Notation</h3>
+            <h3 class="mat-subtitle-1">Ion Notation (C-Terminal Only)</h3>
             <p>
-              C-terminal ion notation indicates that the sequence represents a fragment ion ending at the C-terminus.
-              Common C-terminal ions include b-type, a-type, and c-type ions.
+              Ion type notation in ProForma 2.1 is <strong>always placed at the C-terminal</strong> (end of sequence).
+              All ion types (b, y, a, c, x, z) are indicated using C-terminal modification syntax.
             </p>
             <mat-card class="code-card">
               <pre><code>// b-type ion (most common in CID/HCD)
@@ -156,45 +158,51 @@ const seq = Sequence.fromProforma("PEPTIDE-[b-type-ion]");
 // Accessing the ion information
 const cTermMods = seq.mods.get(-2);
 console.log(cTermMods[0].isIonType); // true
-console.log(cTermMods[0].modValue.primaryValue); // "b-type-ion"</code></pre>
-            </mat-card>
-          </div>
-        </mat-tab>
-        <mat-tab label="N-Terminal">
-          <div class="tab-content">
-            <h3 class="mat-subtitle-1">N-Terminal Ion Notation</h3>
-            <p>
-              N-terminal ion notation indicates that the sequence represents a fragment ion starting from the N-terminus.
-              Common N-terminal representations for reverse ions like y, x, and z types.
-            </p>
-            <mat-card class="code-card">
-              <pre><code>// a-type ion
-const seq = Sequence.fromProforma("[a-type-ion]-PEPTIDE");
+console.log(cTermMods[0].modValue.primaryValue); // "b-type-ion"
 
-const nTermMods = seq.mods.get(-1);
-console.log(nTermMods[0].isIonType); // true
-console.log(nTermMods[0].modValue.primaryValue); // "a-type-ion"</code></pre>
+// y-type ion
+const seq2 = Sequence.fromProforma("PEPTIDE-[y-type-ion]");
+console.log(seq2.toProforma()); // "PEPTIDE-[y-type-ion]"</code></pre>
             </mat-card>
           </div>
         </mat-tab>
         <mat-tab label="With Modifications">
           <div class="tab-content">
-            <h3 class="mat-subtitle-1">Ion Notation with Modifications</h3>
+            <h3 class="mat-subtitle-1">Ion Notation with PTMs</h3>
             <p>
               Ion notation can be combined with other modifications to represent fragment ions with post-translational modifications.
             </p>
             <mat-card class="code-card">
               <pre><code>// Fragment ion with phosphorylation
-const seq = Sequence.fromProforma("[a-type-ion]-PEPS[Phospho]TIDE-[b-type-ion]");
+const seq = Sequence.fromProforma("PEPS[Phospho]TIDE-[b-type-ion]");
 
 // Access both ion notation and modifications
-const nTermMods = seq.mods.get(-1);
 const cTermMods = seq.mods.get(-2);
 const phosphoSite = seq.seq[3]; // S with Phospho
 
-console.log(nTermMods[0].isIonType); // true
 console.log(cTermMods[0].isIonType); // true
+console.log(cTermMods[0].modValue.primaryValue); // "b-type-ion"
 console.log(phosphoSite.mods[0].modValue.primaryValue); // "Phospho"</code></pre>
+            </mat-card>
+          </div>
+        </mat-tab>
+        <mat-tab label="With Charge State">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Ion Notation with Charge State</h3>
+            <p>
+              Ion notation can be combined with charge state information for precursor or fragment ions.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// y-type ion with charge state 2
+const seq = Sequence.fromProforma("PEPTIDE-[y-type-ion]/2");
+
+console.log('Charge:', seq.charge); // 2
+
+const cTermMods = seq.mods.get(-2);
+console.log(cTermMods[0].isIonType); // true
+console.log(cTermMods[0].modValue.primaryValue); // "y-type-ion"
+
+console.log(seq.toProforma()); // "PEPTIDE-[y-type-ion]/2"</code></pre>
             </mat-card>
           </div>
         </mat-tab>
