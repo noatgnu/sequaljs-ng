@@ -58,14 +58,16 @@ export class GlycanValidationComponent {
     valid1: 'HexNAc(1)Hex(3)NeuAc(2)',
     valid2: 'Fuc(1)HexNAc(2)Hex(8)',
     valid3: 'HexNAc(2)Hex(5)NeuAc(2)',
-    valid4: 'Hex(1)',
+    valid4: 'Hex',
+    valid5: 'HexNAc2Hex',
     custom1: '{C8H13N1O5}1Hex2',
     custom2: '{C11H17N1O9}2Hex3HexNAc2',
     customIsotope: '{C8H13[15N1]O5}2Hex1',
+    customCharged: '{C8H13N1O5Na1:z+1}2Hex1HexNAc1',
     invalid1: 'HexNAc(A)Hex(3)',
     invalid2: 'Hex%NeuAc(2)',
-    invalid3: 'HexNAc(0)Hex(3)',
-    invalid4: 'HexNAc(2.5)Hex(3)'
+    invalid3: 'HexNAcHex',
+    invalid4: '{C8H13N1O5}Hex2'
   };
 
   sequenceExamples: {[key: string]: string} = {
@@ -74,7 +76,8 @@ export class GlycanValidationComponent {
     custom: 'PEPTN[Glycan:HexNAc(1)Hex(3)]IDEK',
     customMono: 'N[Glycan:{C8H13N1O5}1Hex2]PEPTIDE',
     customLabile: '{Glycan:{C8H13N1O5}1Hex2}PEPTIDE',
-    customIsotope: 'N[Glycan:{C8H13[15N1]O5}2Hex1]PEPTIDE'
+    customIsotope: 'N[Glycan:{C8H13[15N1]O5}2Hex1]PEPTIDE',
+    customCharged: 'N[Glycan:{C8H13N1O5Na1:z+1}2Hex1HexNAc1]K'
   };
 
   private _customGlycan = '';
@@ -187,16 +190,43 @@ if (labileMods) {
     monoParsing: `// Parse individual monosaccharides from a glycan
 function parseMonosaccharides(glycan) {
   const result = [];
-  const regex = /([A-Za-z]+)\\((\\d+)\\)/g;
-  let match;
+  const glycanClean = glycan.replace(/\\s/g, '');
+  let i = 0;
 
-  while ((match = regex.exec(glycan)) !== null) {
-    result.push({
-      type: match[1],
-      count: parseInt(match[2])
-    });
+  while (i < glycanClean.length) {
+    if (glycanClean[i] === '{') {
+      const closeBrace = glycanClean.indexOf('}', i);
+      if (closeBrace === -1) break;
+
+      const formula = glycanClean.substring(i + 1, closeBrace);
+      i = closeBrace + 1;
+
+      const countMatch = glycanClean.substring(i).match(/^((\\([1-9]\\d*\\))|[1-9]\\d*)?/);
+      let count = 1;
+      if (countMatch && countMatch[0]) {
+        const countStr = countMatch[0].replace(/[()]/g, '');
+        if (countStr) {
+          count = parseInt(countStr);
+          i += countMatch[0].length;
+        }
+      }
+
+      result.push({ type: 'custom', formula: formula, count: count });
+    } else {
+      const monoMatch = glycanClean.substring(i).match(/^([A-Za-z]+)((\\(([1-9]\\d*)\\))|[1-9]\\d*)?/);
+      if (!monoMatch) { i++; continue; }
+
+      const monoType = monoMatch[1];
+      let count = 1;
+      if (monoMatch[2]) {
+        const countStr = monoMatch[2].replace(/[()]/g, '');
+        if (countStr) count = parseInt(countStr);
+      }
+
+      result.push({ type: monoType, count: count });
+      i += monoMatch[0].length;
+    }
   }
-
   return result;
 }
 
@@ -206,15 +236,41 @@ console.log(parseMonosaccharides(glycanStruct));
 //   { type: "HexNAc", count: 2 },
 //   { type: "Hex", count: 3 },
 //   { type: "NeuAc", count: 1 }
+// ]
+
+const customGlycan = '{C8H13N1O5}2Hex3HexNAc';
+console.log(parseMonosaccharides(customGlycan));
+// [
+//   { type: "custom", formula: "C8H13N1O5", count: 2 },
+//   { type: "Hex", count: 3 },
+//   { type: "HexNAc", count: 1 }
 // ]`, validatingGlycan: `
 // Import the ModificationValue class
 import { ModificationValue } from 'sequaljs/dist/modification';
 
-// Validate a glycan structure
-const glycanStruct = 'HexNAc(1)Hex(3)NeuAc(2)';
-const isValid = ModificationValue.validateGlycan(glycanStruct);
+// Validate standard glycan structures
+const glycan1 = 'HexNAc(1)Hex(3)NeuAc(2)';
+console.log(\`Valid: \${ModificationValue.validateGlycan(glycan1)}\`); // true
 
-console.log(\`Is valid glycan: \${isValid}\`); // true`
+// Count can be omitted if monosaccharide is at end
+const glycan2 = 'HexNAc2Hex';
+console.log(\`Valid: \${ModificationValue.validateGlycan(glycan2)}\`); // true
+
+// Custom monosaccharide with count
+const glycan3 = '{C8H13N1O5}1Hex2';
+console.log(\`Valid: \${ModificationValue.validateGlycan(glycan3)}\`); // true
+
+// Custom with isotopes
+const glycan4 = '{C8H13[15N1]O5}2Hex1';
+console.log(\`Valid: \${ModificationValue.validateGlycan(glycan4)}\`); // true
+
+// Invalid: monosaccharide not at end without count
+const invalid1 = 'HexNAcHex';
+console.log(\`Valid: \${ModificationValue.validateGlycan(invalid1)}\`); // false
+
+// Invalid: custom monosaccharide not at end without count
+const invalid2 = '{C8H13N1O5}Hex2';
+console.log(\`Valid: \${ModificationValue.validateGlycan(invalid2)}\`); // false`
 
   }
 
@@ -314,14 +370,55 @@ console.log(\`Is valid glycan: \${isValid}\`); // true`
 
   private extractMonosaccharides(glycan: string): any[] {
     const result = [];
-    const regex = /([A-Za-z]+)\((\d+)\)/g;
-    let match;
+    const glycanClean = glycan.replace(/\s/g, '');
+    let i = 0;
 
-    while ((match = regex.exec(glycan)) !== null) {
-      result.push({
-        type: match[1],
-        count: parseInt(match[2])
-      });
+    while (i < glycanClean.length) {
+      if (glycanClean[i] === '{') {
+        const closeBrace = glycanClean.indexOf('}', i);
+        if (closeBrace === -1) break;
+
+        const formula = glycanClean.substring(i + 1, closeBrace);
+        i = closeBrace + 1;
+
+        const countMatch = glycanClean.substring(i).match(/^((\([1-9]\d*\))|[1-9]\d*)?/);
+        let count = 1;
+        if (countMatch && countMatch[0]) {
+          const countStr = countMatch[0].replace(/[()]/g, '');
+          if (countStr) {
+            count = parseInt(countStr);
+            i += countMatch[0].length;
+          }
+        }
+
+        result.push({
+          type: 'custom',
+          formula: formula,
+          count: count
+        });
+      } else {
+        const monoMatch = glycanClean.substring(i).match(/^([A-Za-z]+)((\(([1-9]\d*)\))|[1-9]\d*)?/);
+        if (!monoMatch) {
+          i++;
+          continue;
+        }
+
+        const monoType = monoMatch[1];
+        let count = 1;
+        if (monoMatch[2]) {
+          const countStr = monoMatch[2].replace(/[()]/g, '');
+          if (countStr) {
+            count = parseInt(countStr);
+          }
+        }
+
+        result.push({
+          type: monoType,
+          count: count
+        });
+
+        i += monoMatch[0].length;
+      }
     }
 
     return result;

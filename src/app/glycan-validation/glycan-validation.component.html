@@ -17,7 +17,13 @@
       <mat-list>
         <mat-list-item>Monosaccharide types use standard nomenclature (Hex, HexNAc, NeuAc, etc.)</mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item>The overall structure follows the pattern <code>MonoType(Count)</code></mat-list-item>
+        <mat-list-item>Standard monosaccharides follow patterns: <code>MonoType(Count)</code> or <code>MonoTypeCount</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Custom monosaccharides use chemical formulas: <code>{{ '{' }}C8H13N1O5{{ '}' }}Count</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Counts are positive integers (1, 2, 3, etc.) - zero and decimals are invalid</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>Count of 1 can be omitted ONLY if monosaccharide is at the end of the glycan string</mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>No invalid characters or formatting are present</mat-list-item>
       </mat-list>
@@ -36,13 +42,15 @@
         <mat-button-toggle (click)="setGlycanExample('valid2')">High Mannose</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('valid3')">Sialylated</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('valid4')">Simple</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('valid5')">No Parentheses (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('custom1')">Custom Mono (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('custom2')">Mixed Custom (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('customCharged')">Custom+Charged (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('invalid1')">Invalid Type</mat-button-toggle>
         <mat-button-toggle (click)="setGlycanExample('invalid2')">Invalid Format</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid3')">Zero Count</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid4')">Decimal Count</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid3')">Missing Count</mat-button-toggle>
+        <mat-button-toggle (click)="setGlycanExample('invalid4')">Custom Missing Count</mat-button-toggle>
       </mat-button-toggle-group>
 
       <div class="custom-input-section">
@@ -57,7 +65,7 @@
 
       <h3 class="mat-subtitle-1">Current Glycan Structure:</h3>
       <mat-card class="code-card">
-        <pre><code>{{currentGlycan}}</code></pre>
+        <pre><code>{{ currentGlycan }}</code></pre>
       </mat-card>
 
       <h3 class="mat-subtitle-1 mt-4">Validation Result:</h3>
@@ -110,6 +118,7 @@
         <mat-button-toggle (click)="setSequenceExample('customMono')">Custom Mono (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setSequenceExample('customLabile')">Custom Labile (2.1)</mat-button-toggle>
         <mat-button-toggle (click)="setSequenceExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('customCharged')">Custom+Charged (2.1)</mat-button-toggle>
       </mat-button-toggle-group>
 
       <div class="custom-input-section">
@@ -124,7 +133,7 @@
 
       <h3 class="mat-subtitle-1">Current Sequence:</h3>
       <mat-card class="code-card">
-        <pre><code>{{currentSequence}}</code></pre>
+        <pre><code>{{ currentSequence }}</code></pre>
       </mat-card>
 
       <h3 class="mat-subtitle-1 mt-4">Parsing Result:</h3>
@@ -217,13 +226,19 @@
 
       <h3 class="mat-subtitle-1 mt-4">Glycan Representation in ProForma</h3>
       <mat-list>
-        <mat-list-item><strong>Labile Glycans:</strong> <code>{{'{'}}Glycan:HexNAc(2)Hex(3){{'}'}}PEPTIDE</code></mat-list-item>
+        <mat-list-item><strong>Labile Glycans:</strong> <code>{{ '{' }}Glycan:HexNAc(2)Hex(3){{ '}' }}PEPTIDE</code></mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item><strong>N-linked Glycan:</strong> <code>PEPTN[Glycan:HexNAc(2)Hex(3)]IDE</code></mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item><strong>O-linked Glycan:</strong> <code>PEPTIDES[Glycan:HexNAc(1)Hex(1)]KN</code></mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item><strong>GNO Reference:</strong> <code>PEPTN[GNO:G59626AS]IDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Custom Monosaccharide (2.1):</strong> <code>N[Glycan:{{ '{' }}C8H13N1O5{{ '}' }}1Hex2]PEPTIDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Custom with Isotope (2.1):</strong> <code>N[Glycan:{{ '{' }}C8H13[15N1]O5{{ '}' }}2Hex1]PEPTIDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Custom Charged (2.1):</strong> <code>N[Glycan:{{ '{' }}C8H13N1O5Na1:z+1{{ '}' }}2Hex1]K</code></mat-list-item>
       </mat-list>
     </mat-card-content>
   </mat-card>
