@@ -17,7 +17,7 @@ import {MatInput} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatOption, MatSelect} from '@angular/material/select';
 
 @Component({
   selector: 'app-glycan-validation',
@@ -47,8 +47,8 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
     MatIcon,
     MatLabel,
     MatFormField,
-    MatButtonToggle,
-    MatButtonToggleGroup
+    MatSelect,
+    MatOption
   ],
   templateUrl: './glycan-validation.component.html',
   styleUrl: './glycan-validation.component.scss'
@@ -99,6 +99,8 @@ export class GlycanValidationComponent {
   }
   currentGlycan = this.glycanExamples['valid1'];
   currentSequence = this.sequenceExamples['labile'];
+  selectedGlycanExample = 'valid1';
+  selectedSequenceExample = 'labile';
   validationResult = '';
   sequenceResult = '';
 
@@ -345,13 +347,23 @@ console.log(\`Valid: \${ModificationValue.validateGlycan(invalid2)}\`); // false
   }
 
   setGlycanExample(key: string): void {
+    this.selectedGlycanExample = key;
     this.currentGlycan = this.glycanExamples[key];
     this.validateGlycan(this.currentGlycan);
   }
 
   setSequenceExample(key: string): void {
+    this.selectedSequenceExample = key;
     this.currentSequence = this.sequenceExamples[key];
     this.parseSequence(this.currentSequence);
+  }
+
+  onGlycanExampleChange(key: string): void {
+    this.setGlycanExample(key);
+  }
+
+  onSequenceExampleChange(key: string): void {
+    this.setSequenceExample(key);
   }
 
   validateCustomGlycan(): void {

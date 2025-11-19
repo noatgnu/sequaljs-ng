@@ -37,21 +37,24 @@
     <mat-card-content>
       <p>Try validating different glycan structures:</p>
 
-      <mat-button-toggle-group class="example-selector">
-        <mat-button-toggle (click)="setGlycanExample('valid1')">N-glycan</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('valid2')">High Mannose</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('valid3')">Sialylated</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('valid4')">Simple</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('valid5')">No Parentheses (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('custom1')">Custom Mono (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('custom2')">Mixed Custom (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('customCharged')">Custom+Charged (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid1')">Invalid Type</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid2')">Invalid Format</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid3')">Missing Count</mat-button-toggle>
-        <mat-button-toggle (click)="setGlycanExample('invalid4')">Custom Missing Count</mat-button-toggle>
-      </mat-button-toggle-group>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Select glycan example</mat-label>
+        <mat-select [(ngModel)]="selectedGlycanExample" (selectionChange)="onGlycanExampleChange($event.value)">
+          <mat-option value="valid1">N-glycan</mat-option>
+          <mat-option value="valid2">High Mannose</mat-option>
+          <mat-option value="valid3">Sialylated</mat-option>
+          <mat-option value="valid4">Simple</mat-option>
+          <mat-option value="valid5">No Parentheses (2.1)</mat-option>
+          <mat-option value="custom1">Custom Mono (2.1)</mat-option>
+          <mat-option value="custom2">Mixed Custom (2.1)</mat-option>
+          <mat-option value="customIsotope">Custom+Isotope (2.1)</mat-option>
+          <mat-option value="customCharged">Custom+Charged (2.1)</mat-option>
+          <mat-option value="invalid1">Invalid Type</mat-option>
+          <mat-option value="invalid2">Invalid Format</mat-option>
+          <mat-option value="invalid3">Missing Count</mat-option>
+          <mat-option value="invalid4">Custom Missing Count</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <div class="custom-input-section">
         <mat-form-field appearance="fill" class="full-width">
@@ -111,15 +114,18 @@
     <mat-card-content>
       <p>Validate glycans in the context of a peptide sequence:</p>
 
-      <mat-button-toggle-group class="example-selector">
-        <mat-button-toggle (click)="setSequenceExample('labile')">Labile Glycan</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('attached')">GNO Glycan</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('custom')">Site-specific</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('customMono')">Custom Mono (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('customLabile')">Custom Labile (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('customIsotope')">Custom+Isotope (2.1)</mat-button-toggle>
-        <mat-button-toggle (click)="setSequenceExample('customCharged')">Custom+Charged (2.1)</mat-button-toggle>
-      </mat-button-toggle-group>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Select sequence example</mat-label>
+        <mat-select [(ngModel)]="selectedSequenceExample" (selectionChange)="onSequenceExampleChange($event.value)">
+          <mat-option value="labile">Labile Glycan</mat-option>
+          <mat-option value="attached">GNO Glycan</mat-option>
+          <mat-option value="custom">Site-specific</mat-option>
+          <mat-option value="customMono">Custom Mono (2.1)</mat-option>
+          <mat-option value="customLabile">Custom Labile (2.1)</mat-option>
+          <mat-option value="customIsotope">Custom+Isotope (2.1)</mat-option>
+          <mat-option value="customCharged">Custom+Charged (2.1)</mat-option>
+        </mat-select>
+      </mat-form-field>
 
       <div class="custom-input-section">
         <mat-form-field appearance="fill" class="full-width">
