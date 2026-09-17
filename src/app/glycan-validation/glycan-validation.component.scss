@@ -1,0 +1,51 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+.mt-4 {
+  margin-top: 24px;
+}
+
+.code-card {
+  margin-top: 16px;
+}
+
+.output-card {
+  max-height: 400px;
+  overflow: auto;
+}
+
+pre {
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+}
+
+code {
+  font-family: 'Roboto Mono', monospace;
+}
+
+mat-tab-group {
+  margin-top: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.custom-input-section {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+mat-table {
+  margin-bottom: 24px;
+}

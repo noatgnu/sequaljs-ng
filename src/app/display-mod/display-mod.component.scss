@@ -1,0 +1,13 @@
+.small-glycan {
+  display: block;
+  margin-top: 2px;
+
+  ::ng-deep .glycan-container {
+
+    .glycan-image {
+      max-height: 100px;
+      max-width: 100%;
+      object-fit: contain;
+    }
+  }
+}

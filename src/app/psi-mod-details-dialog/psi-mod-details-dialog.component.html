@@ -1,0 +1,94 @@
+<h5 mat-dialog-title>{{data.name}} ({{data.id}})</h5>
+<mat-dialog-content>
+  <div class="psimod-details">
+    <div class="detail-row">
+      <span class="label">Definition:</span>
+      <span>{{data.definition}}</span>
+    </div>
+
+    @if (data.monoisotopicMass !== undefined) {
+      <div class="detail-row">
+        <span class="label">Mono Mass:</span>
+        <span>{{data.monoisotopicMass}} Da</span>
+      </div>
+    }
+
+    @if (data.averageMass !== undefined) {
+      <div class="detail-row">
+        <span class="label">Avg Mass:</span>
+        <span>{{data.averageMass}} Da</span>
+      </div>
+    }
+
+    @if (data.formula) {
+      <div class="detail-row">
+        <span class="label">Formula:</span>
+        <span>{{data.formula}}</span>
+      </div>
+    }
+
+    @if (data.specificity && data.specificity.length > 0) {
+      <div class="detail-row">
+        <span class="label">Specificity:</span>
+        <div class="chips">
+          @for (site of data.specificity; track $index) {
+            <span class="chip">{{site}}</span>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.synonyms && data.synonyms.length > 0) {
+      <div class="detail-section">
+        <h3>Synonyms</h3>
+        <ul class="synonym-list">
+          @for (synonym of data.synonyms; track $index) {
+            <li>{{synonym.name}} <span class="synonym-type">({{synonym.type}})</span></li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (data.xrefs && data.xrefs.length > 0) {
+      <div class="detail-section">
+        <h3>Cross References</h3>
+        <div class="xrefs-list">
+          @for (xref of data.xrefs; track $index) {
+            <div class="xref-item">
+              {{xref.database}}: {{xref.identifier}}
+              @if (xref.description) {
+                <span class="xref-desc">"{{xref.description}}"</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.relationships && data.relationships.length > 0) {
+      <div class="detail-section">
+        <h3>Relationships</h3>
+        <div class="relationship-list">
+          @for (rel of data.relationships; track $index) {
+            <div class="relationship-item">
+              {{rel.type}}: {{rel.target}}
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.comment) {
+      <div class="detail-section">
+        <h3>Comment</h3>
+        <p>{{data.comment}}</p>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+  @if (linkedUnimodId) {
+    <button mat-button color="primary" (click)="showLinkedUnimod()">View in Unimod</button>
+  }
+</mat-dialog-actions>

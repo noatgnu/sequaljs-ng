@@ -1,0 +1,103 @@
+<div class="page-container">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="app-header">
+    <div class="header-toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <a class="app-title" routerLink="/">
+        <mat-icon>code</mat-icon>
+        <span>SequalJS</span>
+      </a>
+      <div class="spacer">
+      </div>
+      <div class="header-actions">
+        <a mat-icon-button href="https://github.com/noatgnu/sequaljs" target="_blank" matTooltip="SequalJS Library">
+          <mat-icon>code</mat-icon>
+        </a>
+        <a mat-icon-button href="https://github.com/noatgnu/sequaljs-ng" target="_blank" matTooltip="SequalJS-NG Frontend">
+          <mat-icon>web</mat-icon>
+        </a>
+        <button mat-icon-button class="theme-toggle" (click)="toggleTheme()">
+          <mat-icon>{{isDarkTheme ? 'brightness_4' : 'brightness_7'}}</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main content with sidenav -->
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav mode="over" class="sidenav">
+      <mat-nav-list>
+        <h3 matSubheader>Tool</h3>
+        <a mat-list-item routerLink="/parser" routerLinkActive="active">
+          <mat-icon matListItemIcon>code</mat-icon>
+          <span matListItemTitle>Parser</span>
+        </a>
+        <h3 matSubheader>Documentation</h3>
+        <a mat-list-item routerLink="/home" routerLinkActive="active">
+          <mat-icon matListItemIcon>home</mat-icon>
+          <span matListItemTitle>Home</span>
+        </a>
+        <a mat-list-item routerLink="/pipe-values" routerLinkActive="active">
+          <mat-icon matListItemIcon>route</mat-icon>
+          <span matListItemTitle>Pipe Values</span>
+        </a>
+
+        <a mat-list-item routerLink="/terminal-modifications" routerLinkActive="active">
+          <mat-icon matListItemIcon>terminal</mat-icon>
+          <span matListItemTitle>Terminal Modifications</span>
+        </a>
+        <a mat-list-item routerLink="/global-modifications" routerLinkActive="active">
+          <mat-icon matListItemIcon>public</mat-icon>
+          <span matListItemTitle>Global Modifications</span>
+        </a>
+        <a mat-list-item routerLink="/unknown-modifications" routerLinkActive="active">
+          <mat-icon matListItemIcon>question_mark</mat-icon>
+          <span matListItemTitle>Unknown Position Mods</span>
+        </a>
+        <a mat-list-item routerLink="/labile-modifications" routerLinkActive="active">
+          <mat-icon matListItemIcon>link_off</mat-icon>
+          <span matListItemTitle>Labile Modifications</span>
+        </a>
+        <a mat-list-item routerLink="/chimeric-spectra" routerLinkActive="active">
+          <mat-icon matListItemIcon>plus_one</mat-icon>
+          <span matListItemTitle>Chimeric Spectra</span>
+        </a>
+        <a mat-list-item routerLink="/glycan-validation" routerLinkActive="active">
+          <mat-icon matListItemIcon>link</mat-icon>
+          <span matListItemTitle>Glycan Validation</span>
+        </a>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>ProForma 2.1</h3>
+        <a mat-list-item routerLink="/ion-notation" routerLinkActive="active">
+          <mat-icon matListItemIcon>science</mat-icon>
+          <span matListItemTitle>Ion Notation</span>
+        </a>
+        <a mat-list-item routerLink="/placement-controls" routerLinkActive="active">
+          <mat-icon matListItemIcon>tune</mat-icon>
+          <span matListItemTitle>Placement Controls</span>
+        </a>
+        <a mat-list-item routerLink="/named-entities" routerLinkActive="active">
+          <mat-icon matListItemIcon>label</mat-icon>
+          <span matListItemTitle>Named Entities</span>
+        </a>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>Examples</h3>
+        <a mat-list-item routerLink="/basic-usage" routerLinkActive="active">
+          <mat-icon matListItemIcon>description</mat-icon>
+          <span matListItemTitle>Basic Usage</span>
+        </a>
+        <a mat-list-item routerLink="/advanced-usage" routerLinkActive="active">
+          <mat-icon matListItemIcon>extension</mat-icon>
+          <span matListItemTitle>Advanced Usage</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content class="sidenav-content">
+      <div class="content-container">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

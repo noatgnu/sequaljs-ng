@@ -1,0 +1,104 @@
+<h5 mat-dialog-title>RESID: {{data.residId}}</h5>
+<mat-dialog-content>
+  <div class="resid-details">
+    @if (data.psiMod) {
+      <div class="detail-row">
+        <span class="label">PSI-MOD:</span>
+        <span>{{data.psiMod.name}} ({{data.psiMod.id}})</span>
+      </div>
+
+      @if (data.psiMod.definition) {
+        <div class="detail-row">
+          <span class="label">Definition:</span>
+          <span>{{data.psiMod.definition}}</span>
+        </div>
+      }
+
+      @if (data.psiMod.monoisotopicMass !== undefined) {
+        <div class="detail-row">
+          <span class="label">Mono Mass:</span>
+          <span>{{data.psiMod.monoisotopicMass}} Da</span>
+        </div>
+      }
+
+      @if (data.psiMod.averageMass !== undefined) {
+        <div class="detail-row">
+          <span class="label">Avg Mass:</span>
+          <span>{{data.psiMod.averageMass}} Da</span>
+        </div>
+      }
+
+      @if (data.psiMod.formula) {
+        <div class="detail-row">
+          <span class="label">Formula:</span>
+          <span>{{data.psiMod.formula}}</span>
+        </div>
+      }
+
+      @if (data.psiMod.specificity && data.psiMod.specificity.length > 0) {
+        <div class="detail-row">
+          <span class="label">Specificity:</span>
+          <div class="chips">
+            @for (site of data.psiMod.specificity; track $index) {
+              <span class="chip">{{site}}</span>
+            }
+          </div>
+        </div>
+      }
+
+      @if (data.psiMod.synonyms && data.psiMod.synonyms.length > 0) {
+        <div class="detail-section">
+          <h3>Synonyms</h3>
+          <ul class="synonym-list">
+            @for (synonym of data.psiMod.synonyms; track $index) {
+              <li>{{synonym.name}} <span class="synonym-type">({{synonym.type}})</span></li>
+            }
+          </ul>
+        </div>
+      }
+
+      @if (data.psiMod.xrefs && data.psiMod.xrefs.length > 0) {
+        <div class="detail-section">
+          <h3>Cross References</h3>
+          <div class="xrefs-list">
+            @for (xref of data.psiMod.xrefs; track $index) {
+              <div class="xref-item">
+                {{xref.database}}: {{xref.identifier}}
+                @if (xref.description) {
+                  <span class="xref-desc">"{{xref.description}}"</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (data.psiMod.relationships && data.psiMod.relationships.length > 0) {
+        <div class="detail-section">
+          <h3>Relationships</h3>
+          <div class="relationship-list">
+            @for (rel of data.psiMod.relationships; track $index) {
+              <div class="relationship-item">
+                {{rel.type}}: {{rel.target}}
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (data.psiMod.comment) {
+        <div class="detail-section">
+          <h3>Comment</h3>
+          <p>{{data.psiMod.comment}}</p>
+        </div>
+      }
+    } @else {
+      <div class="error-message">
+        No PSI-MOD mapping found for RESID {{data.residId}}
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

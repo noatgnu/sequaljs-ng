@@ -1,0 +1,90 @@
+<div class="container">
+  <h1 class="mat-headline-5">Pipe Values in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Understanding Pipe Values</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Pipe values in ProForma notation provide a way to include additional metadata alongside a peptide sequence.
+        They are denoted by the pipe symbol (|) followed by the value.
+      </p>
+
+      <p>
+        Common uses include synonyms, mass delta, and quality metrics associated with a modifications. They can be found also in modification type that are annotated from the outside of the sequences like N- and C-terminals, global modifications...
+      </p>
+
+      <mat-list>
+        <mat-list-item><strong>Syntax:</strong> <code>PEPT[pipe-value1|pipe-value2|...]IDE</code></mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Parsing Pipe Values</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Try parsing sequences with different pipe values:</p>
+
+      <mat-button-toggle-group>
+        <mat-button-toggle (click)="setSequenceExample('basic')">Basic</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('withMod')">With Modification</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('localization')">With Localization</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('multiple')">Multiple Values</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('complex')">Complex Example</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('withGlobal')">With Global Mod</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="custom-input-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Enter custom ProForma sequence</mat-label>
+          <input matInput [(ngModel)]="customSequence" placeholder="e.g., PEPT[INFO:Newly discovered]IDE">
+          <button mat-icon-button matSuffix (click)="parseCustomSequence()" aria-label="Parse">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <h3 class="mat-subtitle-1">Current Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentSequence}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsing Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{sequenceResult}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Pipe Values API</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS provides several methods to work with pipe values:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Parsing Pipe Values">
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples['parsing']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Adding Pipe Values">
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples['adding']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Working with Values">
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples['working']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

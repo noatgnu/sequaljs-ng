@@ -1,0 +1,17 @@
+<div class="printable-view">
+  @if (isLoading) {
+    <div class="loading">
+      <mat-spinner></mat-spinner>
+      <span>Loading sequence...</span>
+    </div>
+  } @else if (error) {
+    <div class="error-message">
+      <mat-icon>error</mat-icon>
+      <span>{{ error }}</span>
+    </div>
+  } @else if (sequence) {
+    <div class="printable-sequence-container">
+      <app-parser-result [sequence]="sequence" [printMode]="true"></app-parser-result>
+    </div>
+  }
+</div>

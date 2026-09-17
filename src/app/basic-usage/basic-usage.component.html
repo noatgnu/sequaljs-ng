@@ -1,0 +1,90 @@
+<div class="container">
+  <h1 class="mat-headline-5">Basic Usage</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Installation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Install SequalJS using npm:</p>
+      <mat-card class="code-card">
+        <pre><code>{{codeExamples.installation}}</code></pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Importing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Import the Sequence class:</p>
+      <mat-card class="code-card">
+        <pre><code>{{codeExamples.importExample}}</code></pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Basic Parsing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Parse a ProForma peptide sequence:</p>
+      <mat-card class="code-card">
+        <pre><code>{{codeExamples.basicParsing}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Try</h3>
+      <div class="demo-box">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Enter a ProForma sequence</mat-label>
+          <input matInput [(ngModel)]="basicExample" type="text">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="updateSequence()">Parse</button>
+
+        <h4 class="mat-subtitle-2 mt-4">Output:</h4>
+        <mat-card class="output-card">
+          <pre>{{output}}</pre>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Converting Back to ProForma</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Convert a Sequence object back to ProForma notation:</p>
+      <mat-card class="code-card">
+        <pre><code>{{codeExamples.basicOutput}}</code></pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Key Functions</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <code>Sequence.fromProforma(string)</code>: Parse a ProForma string into a Sequence object
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>Sequence.toProforma()</code>: Convert back to ProForma notation
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>Sequence.toStrippedString()</code>: Get the plain sequence without modifications
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <code>Sequence.seq</code>: Access residues with their modifications
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

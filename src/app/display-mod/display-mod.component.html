@@ -1,0 +1,107 @@
+@if (modification) {
+  <div class="pipe-values">
+    @if (modification.crosslinkId) {
+      <div class="crosslink-id">
+        <span>Crosslink ID:</span>
+        <span>{{modification.crosslinkId}}</span>
+      </div>
+    }
+
+    @if (modification.isBranch || modification.isBranchRef) {
+      <div class="branch">
+        <span>Branch</span>
+      </div>
+    }
+
+    @if (modification.ambiguityGroup) {
+      <div class="ambiguity-group" matTooltip="Localization Score {{modification.localizationScore}}">
+        <p>
+          Ambiguity Group:<br>
+          {{modification.ambiguityGroup}} ({{modification.localizationScore}})
+        </p>
+      </div>
+    }
+
+    @for (pipeValue of modification.modValue.pipeValues; track $index) {
+      @if (pipeValue.value.toUpperCase() !== "#BRANCH" &&
+      pipeValue.value.replace("#", "") !== modification.crosslinkId &&
+      !pipeValue.value.startsWith("#")) {
+
+      @if (pipeValue.source) {
+        @if (["GNO", "G", "GLYCAN"].includes(pipeValue.source.toUpperCase())) {
+          <div class="pipe-value pipe-type-glycan"
+               [class.clickable]="checkIfValueInGlycan(pipeValue.value)&&['GNO', 'G'].includes(pipeValue.source.toUpperCase())"
+               (click)="showGlycanDetails(pipeValue.value)">
+            <div class="pipe-indicator"></div>
+            {{pipeValue.source}}:{{pipeValue.value}}
+            @if (glycanLoading) {
+              <mat-spinner diameter="16" class="inline-spinner"></mat-spinner>
+            } @else {
+              <mat-icon class="info-icon">info</mat-icon>
+            }
+          </div>
+          @if (["GNO", "G"].includes(pipeValue.source.toUpperCase())) {
+            <app-show-glycan [glycanId]="pipeValue.value" class="small-glycan"></app-show-glycan>
+          }
+        }
+          @else if (["XLMOD", "XL", "X", "XL-MOD"].includes(pipeValue.source.toUpperCase()) || pipeValue.isCrosslinkRef) {
+            <div class="pipe-value pipe-type-crosslink"
+                 [class.clickable]="checkIfValueInXLMod(pipeValue.value)"
+                 (click)="showXLModDetails(pipeValue.value)">
+              <div class="pipe-indicator"></div>
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+              <mat-icon class="info-icon">info</mat-icon>
+            </div>
+          }
+
+          @else if (["UNIMOD", "U"].includes(pipeValue.source.toUpperCase())) {
+            <div class="pipe-value pipe-type-unimod"
+                 [class.clickable]="checkIfValueInUnimod(pipeValue.value)"
+                 (click)="showUnimodDetails(pipeValue.value)">
+              <div class="pipe-indicator"></div>
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+              <mat-icon class="info-icon">info</mat-icon>
+            </div>
+          }
+
+          @else if (["MOD", "M"].includes(pipeValue.source.toUpperCase())) {
+            <div class="pipe-value pipe-type-psimod"
+                 [class.clickable]="checkIfValueInPSIMod(pipeValue.value)"
+                 (click)="showPSIModDetails(pipeValue.value)">
+              <div class="pipe-indicator"></div>
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+              <mat-icon class="info-icon">info</mat-icon>
+            </div>
+          }
+
+          @else if (["RESID", "R"].includes(pipeValue.source.toUpperCase())) {
+            <div class="pipe-value pipe-type-resid"
+                 [class.clickable]="checkIfValueInRESID(pipeValue.value)"
+                 (click)="showRESIDDetails(pipeValue.value)">
+              <div class="pipe-indicator"></div>
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+              <mat-icon class="info-icon">info</mat-icon>
+            </div>
+          }
+
+          @else {
+            <div class="pipe-value pipe-type-{{pipeValue.type.toLowerCase()}}">
+              <div class="pipe-indicator"></div>
+              {{pipeValue.source}}:{{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+            </div>
+          }
+        }
+
+        @else {
+          <div class="pipe-value pipe-type-{{pipeValue.type.toLowerCase()}}"
+               [class.clickable]="checkIfValueInSynonym(pipeValue.value)"
+               (click)="showSynonymDetails(pipeValue.value)">
+            <div class="pipe-indicator"></div>
+            {{pipeValue.value}}@if (pipeValue.charge) {:{{pipeValue.charge}}}
+            <mat-icon class="info-icon">info</mat-icon>
+          </div>
+        }
+      }
+    }
+  </div>
+}

@@ -1,0 +1,260 @@
+<div class="container">
+  <h1 class="mat-headline-5">Named Entities in SequalJS (ProForma 2.1)</h1>
+
+  <p class="mat-body-1">
+    ProForma 2.1 introduces named entities, allowing you to assign descriptive names to different levels of peptide representations:
+    peptidoforms (single >), peptidoform ions (double >>), and compound ions (triple >>>).
+  </p>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Examples</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-button-toggle-group>
+        <mat-button-toggle (click)="setExample('peptidoform')">Peptidoform</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('peptidoformIon')">Peptidoform Ion</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('compoundIon')">Compound Ion</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('all')">All Three Levels</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('withMods')">With Modifications</mat-button-toggle>
+        <mat-button-toggle (click)="setExample('chimeric')">Chimeric</mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>ProForma Notation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card class="code-card">
+        <pre><code>{{currentExample}}</code></pre>
+      </mat-card>
+      <p class="mat-body-2 mt-3">
+        Named entities use parentheses with angle brackets:
+        <code>(>name)</code> for peptidoform, <code>(>>name)</code> for peptidoform ion, <code>(>>>name)</code> for compound ion
+      </p>
+      <mat-form-field appearance="outline" style="width:100%; margin-top: 16px;">
+        <mat-label>Try your own sequence</mat-label>
+        <input matInput [(ngModel)]="customSequence" placeholder="e.g., (>My peptide)PEPTIDEK">
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="section-grid">
+    <mat-card appearance="outlined" class="mb-4">
+      <mat-card-header>
+        <mat-card-title>Usage in Code</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-tab-group animationDuration="0ms">
+          <mat-tab label="Peptidoform">
+            <div class="tab-content">
+              <mat-card class="code-card">
+                <pre><code>{{namedCode['peptidoform']}}</code></pre>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Peptidoform Ion">
+            <div class="tab-content">
+              <mat-card class="code-card">
+                <pre><code>{{namedCode['peptidoformIon']}}</code></pre>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Compound Ion">
+            <div class="tab-content">
+              <mat-card class="code-card">
+                <pre><code>{{namedCode['compoundIon']}}</code></pre>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="All Levels">
+            <div class="tab-content">
+              <mat-card class="code-card">
+                <pre><code>{{namedCode['all']}}</code></pre>
+              </mat-card>
+            </div>
+          </mat-tab>
+          <mat-tab label="Adding Names">
+            <div class="tab-content">
+              <mat-card class="code-card">
+                <pre><code>{{namedCode['adding']}}</code></pre>
+              </mat-card>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="mb-4">
+      <mat-card-header>
+        <mat-card-title>Visual Rendering</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (parsedSequence) {
+          <app-parser-result [sequence]="parsedSequence"></app-parser-result>
+        }
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="mb-4">
+      <mat-card-header>
+        <mat-card-title>Parsed Data (JSON)</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card class="output-card">
+          <pre>{{output}}</pre>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Named Entity Levels</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Peptidoform (>)">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Peptidoform Names</h3>
+            <p>
+              A peptidoform name (single >) describes the specific molecular form of a peptide, including its modifications.
+              This is the most specific level of naming.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// Named peptidoform
+const seq = Sequence.fromProforma("(>TMT-labeled peptide)PEPTIDEK");
+
+console.log(seq.peptidoformName); // "TMT-labeled peptide"
+console.log(seq.toStrippedString()); // "PEPTIDEK"
+
+// With modifications
+const seq2 = Sequence.fromProforma("(>Phospho-peptide)PEPS[Phospho]T");
+console.log(seq2.peptidoformName); // "Phospho-peptide"</code></pre>
+            </mat-card>
+            <p class="mat-body-2 mt-3">
+              <strong>Use case:</strong> Identifying specific peptide variants in proteomics experiments.
+            </p>
+          </div>
+        </mat-tab>
+        <mat-tab label="Peptidoform Ion (>>)">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Peptidoform Ion Names</h3>
+            <p>
+              A peptidoform ion name (double >>) describes the ion form of a peptidoform, typically including charge state information.
+              This level is useful for mass spectrometry data.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// Named peptidoform ion
+const seq = Sequence.fromProforma("(>>Precursor z=2)PEPTIDEK/2");
+
+console.log(seq.peptidoformIonName); // "Precursor z=2"
+console.log(seq.charge); // 2
+
+// Multiple charges with name
+const seq2 = Sequence.fromProforma("(>>Doubly charged)PEPTIDE/2");
+console.log(seq2.peptidoformIonName); // "Doubly charged"
+console.log(seq2.charge); // 2</code></pre>
+            </mat-card>
+            <p class="mat-body-2 mt-3">
+              <strong>Use case:</strong> Annotating MS/MS precursor ions with descriptive names.
+            </p>
+          </div>
+        </mat-tab>
+        <mat-tab label="Compound Ion (>>>)">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Compound Ion Names</h3>
+            <p>
+              A compound ion name (triple >>>) describes a collection of peptidoform ions, typically used for chimeric spectra
+              or MS1-level annotations.
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// Named compound ion
+const seq = Sequence.fromProforma("(>>>Chimeric Spectrum 1234)PEPTIDEK/2");
+
+console.log(seq.compoundIonName); // "Chimeric Spectrum 1234"
+
+// Chimeric spectrum with compound name
+const chimeric = Sequence.fromProforma(
+  "(>>>MS2 Scan 5678)PEPTIDE/2+ANOTHER/3"
+);
+console.log(chimeric.compoundIonName); // "MS2 Scan 5678"
+console.log(chimeric.isChimeric); // true</code></pre>
+            </mat-card>
+            <p class="mat-body-2 mt-3">
+              <strong>Use case:</strong> Annotating chimeric MS2 spectra with scan or spectrum identifiers.
+            </p>
+          </div>
+        </mat-tab>
+        <mat-tab label="All Three Levels">
+          <div class="tab-content">
+            <h3 class="mat-subtitle-1">Combining All Naming Levels</h3>
+            <p>
+              All three naming levels can be combined to provide complete hierarchical annotation of peptide ions.
+              The order is always compound ion (>>>) → peptidoform ion (>>) → peptidoform (>).
+            </p>
+            <mat-card class="code-card">
+              <pre><code>// All three levels combined
+const seq = Sequence.fromProforma(
+  "(>>>Chimeric Spectrum 1234)(>>Precursor z=2)(>Phospho-peptide)PEPS[Phospho]T/2"
+);
+
+console.log(seq.compoundIonName); // "Chimeric Spectrum 1234"
+console.log(seq.peptidoformIonName); // "Precursor z=2"
+console.log(seq.peptidoformName); // "Phospho-peptide"
+console.log(seq.charge); // 2
+console.log(seq.toStrippedString()); // "PEPSST"
+
+// Hierarchy: Compound > Ion > Peptidoform
+// (>>>Level 1)(>>Level 2)(>Level 3)SEQUENCE</code></pre>
+            </mat-card>
+            <p class="mat-body-2 mt-3">
+              <strong>Use case:</strong> Complete annotation of complex MS data with multiple identification levels.
+            </p>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Common Scenarios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <strong>Simple peptidoform:</strong>
+          <code>(>TMT-labeled)PEPTIDEK</code>
+          - Name a specific modified peptide
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Precursor ion:</strong>
+          <code>(>>Precursor z=2)PEPTIDE/2</code>
+          - Name the ion state with charge
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Chimeric spectrum:</strong>
+          <code>(>>>Scan 1234)PEPTIDE/2+ANOTHER/3</code>
+          - Name the entire chimeric spectrum
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>Full hierarchy:</strong>
+          <code>(>>>Scan)(>>Ion)(>Form)PEPTIDE</code>
+          - All three levels for complete annotation
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <strong>With modifications:</strong>
+          <code>(>Named)<[Mod]@K>PEPTIDEK</code>
+          - Combine names with global modifications
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

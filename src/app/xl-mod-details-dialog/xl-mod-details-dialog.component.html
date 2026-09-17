@@ -1,0 +1,105 @@
+<h5 mat-dialog-title>{{data.name}} ({{data.id}})</h5>
+<mat-dialog-content>
+  <div class="xlmod-details">
+    <div class="detail-row">
+      <span class="label">Definition:</span>
+      <span>{{data.definition}}</span>
+    </div>
+
+    @if (data.category) {
+      <div class="detail-row">
+        <span class="label">Category:</span>
+        <span>{{data.category}}</span>
+      </div>
+    }
+
+    @if (data.monoisotopicMass !== undefined) {
+      <div class="detail-row">
+        <span class="label">Mono Mass:</span>
+        <span>{{data.monoisotopicMass}} Da</span>
+      </div>
+    }
+
+    @if (data.averageMass !== undefined) {
+      <div class="detail-row">
+        <span class="label">Avg Mass:</span>
+        <span>{{data.averageMass}} Da</span>
+      </div>
+    }
+
+    @if (data.formula) {
+      <div class="detail-row">
+        <span class="label">Formula:</span>
+        <span>{{data.formula}}</span>
+      </div>
+    }
+
+    @if (data.spacerLength !== undefined) {
+      <div class="detail-row">
+        <span class="label">Spacer Length:</span>
+        <span>{{data.spacerLength}} Å</span>
+      </div>
+    }
+
+    @if (data.reactiveGroups && data.reactiveGroups.length > 0) {
+      <div class="detail-row">
+        <span class="label">Reactive Groups:</span>
+        <div class="chips">
+          @for (group of data.reactiveGroups; track group) {
+            <span class="chip">{{group}}</span>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.relationships && data.relationships.length > 0) {
+      <div class="detail-section">
+        <h3>Relationships</h3>
+        <ul class="relationship-list">
+          @for (rel of data.relationships; track rel) {
+            <li class="relationship-item">
+              <span class="rel-type">{{rel.type}}</span>: {{rel.targetId}}
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (data.synonyms && data.synonyms.length > 0) {
+      <div class="detail-section">
+        <h3>Synonyms</h3>
+        <ul class="synonym-list">
+          @for (synonym of data.synonyms; track synonym) {
+            <li>{{synonym}}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (data.xrefs && data.xrefs.length > 0) {
+      <div class="detail-section">
+        <h3>References</h3>
+        <div class="xrefs-list">
+          @for (xref of data.xrefs; track xref) {
+            <div class="xref-item">
+              {{xref.database}}:{{xref.identifier}}
+              @if (xref.description) {
+                <span class="xref-desc">"{{xref.description}}"</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (data.comment) {
+      <div class="detail-section">
+        <h3>Comment</h3>
+        <p>{{data.comment}}</p>
+      </div>
+    }
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

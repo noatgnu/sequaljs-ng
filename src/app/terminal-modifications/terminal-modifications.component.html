@@ -1,0 +1,185 @@
+<div class="container">
+  <h1 class="mat-headline-5">Terminal Modifications in SequalJS</h1>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>What are Terminal Modifications?</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        Terminal modifications are chemical alterations that occur at the beginning (N-terminal)
+        or end (C-terminal) of peptide chains. These modifications are crucial in proteomics
+        as they can significantly affect protein stability, function, and interactions.
+      </p>
+
+      <p>
+        SequalJS provides comprehensive support for terminal modifications in the ProForma format:
+      </p>
+
+      <mat-list>
+        <mat-list-item><strong>N-terminal modifications:</strong> Placed before the peptide sequence, followed by a hyphen</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>C-terminal modifications:</strong> Placed after the peptide sequence, with a preceding hyphen</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Multiple modifications:</strong> Multiple modifications can be specified at each terminus</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Examples:</strong> <code>[Acetyl]-PEPTIDE</code> (N-terminal), <code>PEPTIDE-[Amidated]</code> (C-terminal)</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Parsing Terminal Modifications</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Try parsing different peptide sequences with terminal modifications:</p>
+
+      <mat-button-toggle-group class="example-selector">
+        <mat-button-toggle (click)="setSequenceExample('nterm')">N-terminal only</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('cterm')">C-terminal only</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('both')">Both termini</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('multiple')">Multiple mods</mat-button-toggle>
+        <mat-button-toggle (click)="setSequenceExample('complex')">Complex sequence</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <div class="custom-input-section">
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>Enter custom ProForma sequence</mat-label>
+          <input matInput [(ngModel)]="customSequence" placeholder="e.g., [Acetyl]-PEPTIDE">
+          <button mat-icon-button matSuffix (click)="parseCustomSequence()" aria-label="Parse">
+            <mat-icon>check_circle</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <h3 class="mat-subtitle-1">Current Sequence:</h3>
+      <mat-card class="code-card">
+        <pre><code>{{currentSequence}}</code></pre>
+      </mat-card>
+
+      <h3 class="mat-subtitle-1 mt-4">Parsing Result:</h3>
+      <mat-card class="output-card">
+        <pre>{{sequenceResult}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Terminal Modification API</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>SequalJS provides several methods to work with terminal modifications:</p>
+
+      <mat-tab-group>
+        <mat-tab label="Parsing Sequences">
+          <mat-card class="code-card">
+            <pre><code>{{terminalCode['parsing']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Adding Modifications">
+          <mat-card class="code-card">
+            <pre><code>{{terminalCode['adding']}}</code></pre>
+          </mat-card>
+        </mat-tab>
+
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Common Terminal Modifications</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <h3 class="mat-subtitle-1">N-Terminal Modifications</h3>
+      <mat-table [dataSource]="commonNTermMods" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mass">
+          <mat-header-cell *matHeaderCellDef>Mass Shift</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.mass}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Try It</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-button color="primary" (click)="addTerminalMod('N', element.name)">
+              Add to sequence
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['name', 'description', 'mass', 'action']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['name', 'description', 'mass', 'action'];"></mat-row>
+      </mat-table>
+
+      <h3 class="mat-subtitle-1 mt-4">C-Terminal Modifications</h3>
+      <mat-table [dataSource]="commonCTermMods" class="mat-elevation-z2">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="mass">
+          <mat-header-cell *matHeaderCellDef>Mass Shift</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.mass}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Add</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-button color="primary" (click)="addTerminalMod('C', element.name)">
+              Add to sequence
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['name', 'description', 'mass', 'action']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['name', 'description', 'mass', 'action'];"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined">
+    <mat-card-header>
+      <mat-card-title>Terminal Modifications in ProForma</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        The ProForma notation provides a standardized way to represent terminal modifications in peptide sequences:
+      </p>
+
+      <h3 class="mat-subtitle-1">Syntax</h3>
+      <mat-list>
+        <mat-list-item><strong>N-terminal format:</strong> <code>[ModificationName]-SEQUENCE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>C-terminal format:</strong> <code>SEQUENCE-[ModificationName]</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Both termini:</strong> <code>[ModificationName]-SEQUENCE-[ModificationName]</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Multiple modifications at one terminus:</strong> <code>[Mod1][Mod2]-SEQUENCE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Mass shift notation:</strong> <code>[+42.011]-SEQUENCE</code> (N-terminal mass shift)</mat-list-item>
+      </mat-list>
+
+      <h3 class="mat-subtitle-1 mt-4">Special Cases</h3>
+      <mat-list>
+        <mat-list-item><strong>Terminal modifications with info tags:</strong> <code>[Acetyl|INFO:common]-PEPTIDE</code></mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Modifications with source:</strong> <code>[UNIMOD:1]-PEPTIDE</code> (Unimod database reference)</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item><strong>Formula notation:</strong> <code>[Formula:C2H3O]-PEPTIDE</code> (chemical formula)</mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

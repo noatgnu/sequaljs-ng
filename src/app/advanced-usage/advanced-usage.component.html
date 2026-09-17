@@ -1,0 +1,86 @@
+<div class="container">
+  <h1 class="mat-headline-5">Advanced Usage</h1>
+
+  <mat-button-toggle-group class="example-selector">
+    <mat-button-toggle (click)="setExample('infoTag')">INFO Tags</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('terminalMods')">Terminal Mods</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('globalMods')">Global Mods</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('jointRepresentation')">Joint Representation</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('crosslinks')">Crosslinks</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('complex')">Complex Example</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('gapNotation')">Gap Notation</mat-button-toggle>
+    <mat-button-toggle (click)="setExample('ambiguity')">Ambiguity Groups</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <mat-card appearance="outlined" class="mb-4 mt-4">
+    <mat-card-header>
+      <mat-card-title>Selected Example</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card class="proforma-card">
+        <pre><code>{{currentExample}}</code></pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Code Example</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @switch (currentExample) {
+        @case (examples['infoTag']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.infoTags}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['terminalMods']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.terminalMods}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['globalMods']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.globalMods}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['jointRepresentation']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.jointRepresentation}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['crosslinks']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.crosslinks}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['complex']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.complex}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['gapNotation']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.gapNotation}}</code></pre>
+          </mat-card>
+        }
+        @case (examples['ambiguity']) {
+          <mat-card class="code-card">
+            <pre><code>{{codeExamples.ambiguity}}</code></pre>
+          </mat-card>
+        }
+      }
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card appearance="outlined" class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Parsed Output</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-card class="output-card">
+        <pre>{{output}}</pre>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>
